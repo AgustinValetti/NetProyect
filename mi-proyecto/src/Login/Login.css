@@ -1,0 +1,197 @@
+/* src/Login/Login.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* Encapsulamos todos los estilos dentro de .login-container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  height: 100vh; /* Asegura que ocupe toda la altura */
+  width: 100vw; /* Asegura que ocupe todo el ancho */
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, #302222 0%, #1a0504 100%); /* Fondo estático oscuro */
+  z-index: 0;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+/* Tarjeta con efecto glassmorphism */
+.login-container .login-card {
+  background: rgba(48, 47, 47, 0.288); /* Nuevo color translúcido */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 350px; /* Más compacto como en la imagen */
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.login-container h2 {
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.login-container .error-message {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.login-container .login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-container .form-group {
+  text-align: left;
+  position: relative;
+}
+
+.login-container .form-group label {
+  color: #d1d5db;
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.login-container .form-group input {
+  width: 100%;
+  padding: 0.7rem;
+  background: rgba(48, 47, 47, 0.288); /* Nuevo color translúcido */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.login-container .form-group input:focus {
+  outline: none;
+  border-color: #bb2d3b; /* Nuevo color principal */
+  background: rgba(48, 47, 47, 0.4);
+  box-shadow: 0 0 10px rgba(187, 45, 59, 0.3); /* Sombra con el nuevo color */
+}
+
+.login-container .form-group input::placeholder {
+  color: #9ca3af;
+}
+
+.login-container .login-button {
+  background: #bb2d3b; /* Nuevo color principal */
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-container .login-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(187, 45, 59, 0.4); /* Sombra con el nuevo color */
+}
+
+.login-container .login-button:disabled {
+  background: #4b5563;
+  cursor: not-allowed;
+}
+
+.login-container .social-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.login-container .social-button {
+  flex: 1;
+  background: rgba(48, 47, 47, 0.288); /* Nuevo color translúcido */
+  color: #ffffff;
+  padding: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-container .social-button:hover {
+  background: rgba(187, 45, 59, 0.2); /* Tono basado en el nuevo color principal */
+  transform: translateY(-2px);
+}
+
+.login-container .login-footer {
+  margin-top: 1.5rem;
+}
+
+.login-container .login-footer p {
+  color: #d1d5db;
+  font-size: 0.85rem;
+}
+
+.login-container .login-footer a {
+  color: #bb2d3b; /* Nuevo color principal */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.login-container .login-footer a:hover {
+  color: #e63946; /* Un tono más claro del rojo para el hover */
+  text-decoration: underline;
+}
+
+.login-container .back-button {
+  margin-top: 1rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-container .back-button:hover {
+  background: rgba(187, 45, 59, 0.2); /* Tono basado en el nuevo color principal */
+  border-color: #bb2d3b; /* Nuevo color principal */
+  color: #ffffff;
+}
+
+.login-container .spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

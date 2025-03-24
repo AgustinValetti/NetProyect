@@ -1,0 +1,112 @@
+/* src/Components/Modal/Modal.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 2rem;
+    color: white;
+  }
+  
+  .modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #BB2D3B;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .modal-close-button:hover {
+    background-color: #bd0811;
+  }
+  
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .modal-trailer {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+  }
+  
+  .modal-trailer iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .modal-description h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .modal-description p {
+    font-size: 1rem;
+    color: #d1d5db;
+    line-height: 1.5;
+  }
+  
+  /* Media Query para tablets (768px y menos) */
+  @media (max-width: 768px) {
+    .modal-content {
+      width: 95%;
+      padding: 1.5rem;
+    }
+  
+    .modal-description h3 {
+      font-size: 1.3rem;
+    }
+  
+    .modal-description p {
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Media Query para móviles (480px y menos) */
+  @media (max-width: 480px) {
+    .modal-content {
+      width: 98%;
+      padding: 1rem;
+    }
+  
+    .modal-trailer {
+      padding-bottom: 75%; /* Ajusta el aspect ratio para pantallas pequeñas */
+    }
+  
+    .modal-description h3 {
+      font-size: 1.2rem;
+    }
+  
+    .modal-description p {
+      font-size: 0.85rem;
+    }
+  }

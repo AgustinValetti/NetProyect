@@ -1,0 +1,454 @@
+/* src/Pages/ContentPage.css */
+.content-page {
+  padding: 2rem;
+  color: white;
+  min-height: calc(100vh - 70px);
+}
+
+.content-page h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 4%;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+.content-card {
+  border-radius: 10px;
+  padding: 1rem;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  background: radial-gradient(150deg, #302222 0%, #1a0504 100%);
+  box-shadow: 0 2px 10px rgba(211, 128, 128, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.content-card:hover {
+  transform: translateY(-5px);
+}
+
+.content-image {
+  width: 100%;
+  height: 300px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.content-card h3 {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.content-card p {
+  font-size: 0.9rem;
+  color: #d1d5db;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #d1d5db;
+  margin-top: 2rem;
+}
+
+.error {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #f87171;
+  margin-top: 2rem;
+}
+
+.back-button {
+  background: #BB2D3B;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(187, 45, 59, 0.4);
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.message {
+  text-align: center;
+  font-size: 1rem;
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin: 1rem 0;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 650px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #BB2D3B;
+  border-radius: 5px;
+  background: radial-gradient(150deg, #302222 0%, #1a0504 100%);
+  color: white;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 10px rgba(211, 128, 128, 0.1);
+}
+
+.search-input::placeholder {
+  color: #d1d5db;
+}
+
+.search-input:focus {
+  border-color: #bd0811;
+  box-shadow: 0 2px 10px rgba(187, 45, 59, 0.3);
+}
+
+.search-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #BB2D3B;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  right: calc(50% - 160px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.add-button {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  padding: 0.8rem;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.add-button:hover {
+  background: rgba(239, 68, 68, 0.3);
+  transform: translateY(-2px);
+  border: 1px solid #BB2D3B;
+}
+
+.remove-button {
+  background: #f87171;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.remove-button:hover {
+  background: #ef4444;
+}
+
+@keyframes spin {
+  0% {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+.no-results {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #f87171;
+  margin-top: 2rem;
+}
+
+/* Paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  background: #BB2D3B;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background: #bd0811;
+}
+
+.pagination button:disabled {
+  background: #6b7280;
+  cursor: not-allowed;
+}
+
+/* Estilo para el Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #1a0504 0%, #3b0a0e 100%); /* Nuevo fondo */
+  border-radius: 15px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 5px 20px rgba(211, 128, 128, 0.2);
+  color: white;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.modal-content:hover {
+  transform: scale(1.02);
+}
+
+.modal-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: white;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.modal-trailer iframe {
+  width: 100%;
+  height: 315px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(187, 45, 59, 0.2);
+}
+
+.modal-description h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.modal-description p {
+  font-size: 0.95rem;
+  color: #d1d5db;
+  text-align: center;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #533f41;
+  color: wheat;
+  border: 2px solid rgba(255, 255, 255, 0.3); /* Borde blanco sutil */
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; /* Forma circular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.modal-close-button:hover {
+  transform: scale(1.1); /* Escala en lugar de translate */
+  background: #1f1718;
+  box-shadow: 0 5px 15px rgba(187, 45, 59, 0.4);
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Media Query para tablets (768px y menos) */
+@media (max-width: 768px) {
+  .content-page {
+    padding: 1.5rem;
+  }
+  .content-page h1 {
+    font-size: 1.8rem;
+    margin-top: 1%;
+    margin-bottom: 4%;
+  }
+  .content-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+  .content-image {
+    height: 250px;
+  }
+  .content-card h3 {
+    font-size: 1rem;
+    margin: 0.75rem 0;
+  }
+  .content-card p {
+    font-size: 0.85rem;
+  }
+  .search-input {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  .search-spinner {
+    right: calc(50% - 135px);
+    width: 18px;
+    height: 18px;
+  }
+  .no-results {
+    font-size: 1.1rem;
+  }
+  .modal-content {
+    width: 85%;
+    padding: 1.5rem;
+  }
+  .modal-content h2 {
+    font-size: 1.3rem;
+  }
+  .modal-trailer iframe {
+    height: 250px;
+  }
+  .modal-description h3 {
+    font-size: 1.1rem;
+  }
+  .modal-description p {
+    font-size: 0.9rem;
+  }
+  .modal-close-button {
+    width: 28px;
+    height: 28px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Media Query para móviles (480px y menos) */
+@media (max-width: 480px) {
+  .content-page {
+    padding: 1rem;
+  }
+  .content-page h1 {
+    font-size: 1.5rem;
+    margin-top: 0.5%;
+    margin-bottom: 3%;
+  }
+  .content-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+  .content-image {
+    height: 200px;
+  }
+  .content-card h3 {
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+  }
+  .content-card p {
+    font-size: 0.8rem;
+  }
+  .search-input {
+    width: 100%;
+    max-width: 250px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  .search-spinner {
+    right: calc(50% - 110px);
+    width: 16px;
+    height: 16px;
+  }
+  .no-results {
+    font-size: 1rem;
+  }
+  .modal-content {
+    width: 90%;
+    padding: 1rem;
+  }
+  .modal-content h2 {
+    font-size: 1.1rem;
+  }
+  .modal-trailer iframe {
+    height: 180px;
+  }
+  .modal-description h3 {
+    font-size: 1rem;
+  }
+  .modal-description p {
+    font-size: 0.85rem;
+  }
+  .modal-close-button {
+    width: 25px;
+    height: 25px;
+    font-size: 1rem;
+  }
+}

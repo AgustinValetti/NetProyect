@@ -1,0 +1,246 @@
+/* src/Profile/Profile.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* Encapsulamos todos los estilos dentro de .general-container */
+.general-container {
+  margin-top: 6%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ocupa al menos toda la altura de la pantalla */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  
+  font-family: 'Inter', sans-serif;
+  padding: 2rem; /* Espaciado para evitar que el contenido toque los bordes */
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+}
+
+/* Tarjeta con efecto glassmorphism */
+.general-container .profile-card {
+  background: rgba(48, 47, 47, 0.288); /* Nuevo color translúcido */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 450px; /* Más ancho para acomodar más contenido */
+  text-align: center;
+}
+
+.general-container h1 {
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.general-container p {
+  color: #d1d5db;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.general-container .error-message {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.general-container .avatar-section {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.general-container .avatar-preview {
+
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.general-container .avatar-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(48, 47, 47, 0.288);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.general-container .profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.general-container .profile-form h3 {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.general-container .profile-form input {
+  width: 100%;
+  padding: 0.7rem;
+  background: rgba(48, 47, 47, 0.288); /* Nuevo color translúcido */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.general-container .profile-form input:focus {
+  outline: none;
+  border-color: #bb2d3b; /* Nuevo color principal */
+  background: rgba(48, 47, 47, 0.4);
+  box-shadow: 0 0 10px rgba(187, 45, 59, 0.3); /* Sombra con el nuevo color */
+}
+
+.general-container .profile-form input::placeholder {
+  color: #9ca3af;
+}
+
+.general-container .profile-form button {
+  background: #bb2d3b; /* Nuevo color principal */
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.general-container .profile-form button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(187, 45, 59, 0.4); /* Sombra con el nuevo color */
+}
+
+.general-container .profile-form button:disabled {
+  background: #4b5563;
+  cursor: not-allowed;
+}
+
+.general-container .delete-button {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  padding: 0.8rem;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.general-container .delete-button:hover {
+  background: rgba(239, 68, 68, 0.3);
+  transform: translateY(-2px);
+}
+
+.general-container button[type="button"] {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.general-container button[type="button"]:hover {
+  background: rgba(187, 45, 59, 0.2); /* Tono basado en el nuevo color principal */
+  border-color: #bb2d3b; /* Nuevo color principal */
+  color: #ffffff;
+}
+
+.general-container .loading-message {
+  color: #ffffff;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.general-container .spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Sección del avatar */
+.avatar-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+/* Estilo base del avatar */
+.avatar-preview {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #007bff; /* Borde azul */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+  cursor: pointer; /* Indica que es clickeable */
+}
+
+/* Efecto al pasar el mouse */
+.avatar-preview:hover {
+  transform: scale(1.05); /* Ligero aumento al pasar el mouse */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+}
+
+/* Efecto al hacer clic */
+.avatar-preview:active {
+  transition: 1s ease;
+  transform: scale(1.3); /* Aumenta más al hacer clic */
+  border: 0.1px solid #bb2d3b;
+}
+
+/* Placeholder cuando no hay avatar */
+.avatar-placeholder {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  color: #666;
+  font-size: 1rem;
+  border: 2px dashed #ccc;
+}

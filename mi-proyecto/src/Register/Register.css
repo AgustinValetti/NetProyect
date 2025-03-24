@@ -1,0 +1,197 @@
+/* src/Register/Register.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* Encapsulamos todos los estilos dentro de .register-container */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  height: 100vh; /* Asegura que ocupe toda la altura */
+  width: 100vw; /* Asegura que ocupe todo el ancho */
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, #302222 0%, #1a0504 100%); /* Fondo estático oscuro */
+  z-index: 0;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+/* Tarjeta con efecto glassmorphism */
+.register-container .register-card {
+  background: rgba(48, 47, 47, 0.288); /* Color translúcido */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 350px; /* Más compacto */
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.register-container h2 {
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.register-container .error-message {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.register-container .register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.register-container .form-group {
+  text-align: left;
+  position: relative;
+}
+
+.register-container .form-group label {
+  color: #d1d5db;
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.register-container .form-group input {
+  width: 100%;
+  padding: 0.7rem;
+  background: rgba(48, 47, 47, 0.288); /* Color translúcido */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.register-container .form-group input:focus {
+  outline: none;
+  border-color: #bb2d3b; /* Color principal */
+  background: rgba(48, 47, 47, 0.4);
+  box-shadow: 0 0 10px rgba(187, 45, 59, 0.3); /* Sombra con el color principal */
+}
+
+.register-container .form-group input::placeholder {
+  color: #9ca3af;
+}
+
+.register-container .register-button {
+  background: #bb2d3b; /* Color principal */
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-container .register-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(187, 45, 59, 0.4); /* Sombra con el color principal */
+}
+
+.register-container .register-button:disabled {
+  background: #4b5563;
+  cursor: not-allowed;
+}
+
+.register-container .social-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.register-container .social-button {
+  flex: 1;
+  background: rgba(48, 47, 47, 0.288); /* Color translúcido */
+  color: #ffffff;
+  padding: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.register-container .social-button:hover {
+  background: rgba(187, 45, 59, 0.2); /* Tono basado en el color principal */
+  transform: translateY(-2px);
+}
+
+.register-container .register-footer {
+  margin-top: 1.5rem;
+}
+
+.register-container .register-footer p {
+  color: #d1d5db;
+  font-size: 0.85rem;
+}
+
+.register-container .register-footer a {
+  color: #bb2d3b; /* Color principal */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.register-container .register-footer a:hover {
+  color: #e63946; /* Un tono más claro del rojo para el hover */
+  text-decoration: underline;
+}
+
+.register-container .back-button {
+  margin-top: 1rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.register-container .back-button:hover {
+  background: rgba(187, 45, 59, 0.2); /* Tono basado en el color principal */
+  border-color: #bb2d3b; /* Color principal */
+  color: #ffffff;
+}
+
+.register-container .spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

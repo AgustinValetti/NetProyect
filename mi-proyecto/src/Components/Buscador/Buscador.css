@@ -1,0 +1,514 @@
+/* Estilos Generales */
+.container {
+  max-width: 900px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  text-align: left;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #BB2D3B;
+  padding: 1rem 2rem;
+}
+
+.navbar-brand a {
+  color: #BB2D3B;
+  font-size: 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar-brand a:hover {
+  color: white;
+  transition: 0.3s;
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-item {
+  color: #BB2D3B;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-item:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.welcome-message {
+  margin-right: 1rem;
+  font-weight: 500;
+}
+
+.logout-button {
+  background-color: #BB2D3B;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #bd0811;
+}
+
+/* Contenido Principal */
+.container h2 {
+  color: #BB2D3B;
+  text-align: center;
+  margin-top: 4%;
+  margin-bottom: 4%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 700;
+  font-size: clamp(18px, 2.5vw, 26px);
+}
+
+.container h2:hover {
+  color: white;
+  transition: 0.3s ease;
+}
+
+/* Barra de Búsqueda */
+.search-input {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  width: 100%;
+  padding: clamp(8px, 1.5vw, 12px);
+  border-radius: 8px;
+  border: 2px solid #BB2D3B;
+  font-size: clamp(13px, 1.5vw, 16px);
+  transition: 0.3s;
+  background-color: #0f0d0d28;
+  color: white;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #bbb;
+}
+
+.search-input:focus {
+  border-color: white;
+  background-color: #0f0d0d28;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Lista de Películas */
+.movie-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.movie-item {
+  display: flex;
+  align-items: center;
+  padding: clamp(6px, 1vw, 10px);
+  cursor: pointer;
+  border-bottom: 1px solid #444;
+  color: white;
+  background-color: #0d0d0f28;
+  transition: background-color 0.2s, transform 0.2s;
+  border-radius: 5px;
+  text-align: start;
+  font-size: clamp(12px, 1.2vw, 16px);
+}
+
+.movie-item:hover {
+  background-color: #BB2D3B;
+  color: white;
+  transform: scale(1.02);
+}
+
+.movie-thumbnail {
+  width: clamp(40px, 5vw, 50px);
+  height: clamp(60px, 7.5vw, 75px);
+  border-radius: 5px;
+  margin-right: clamp(10px, 2vw, 20px);
+}
+
+/* Contenedor de detalles de la película */
+.movie-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(211, 128, 128, 0.1);
+  padding: clamp(15px, 2vw, 30px);
+  margin-top: 20px;
+  background-color: #0f0d0d28;
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Poster */
+.poster img {
+  width: 100%;
+  max-width: clamp(200px, 30vw, 320px);
+  border-radius: 10px;
+  height: auto;
+}
+
+/* Información */
+.details {
+  text-align: left;
+  width: 100%;
+  font-size: clamp(12px, 1.2vw, 16px);
+}
+
+.rating {
+  background: #BB2D3B;
+  color: white;
+  padding: clamp(3px, 0.5vw, 5px) clamp(8px, 1vw, 10px);
+  border-radius: 5px;
+  font-weight: bold;
+  display: inline-block;
+  font-size: clamp(12px, 1.2vw, 14px);
+}
+
+.overview {
+  text-align: left;
+  margin-top: 10px;
+  font-size: clamp(12px, 1.2vw, 16px);
+  line-height: 1.5;
+}
+
+.cast {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.actor {
+  background: #222;
+  padding: clamp(6px, 1vw, 8px) clamp(10px, 1.5vw, 12px);
+  border-radius: 5px;
+  font-size: clamp(11px, 1.1vw, 14px);
+}
+
+.reviews-section {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 2px solid #4d42427c;
+  color: white;
+  text-align: center;
+}
+
+.reviews-section h3 {
+  color: #BB2D3B;
+  margin-bottom: 20px;
+  font-size: clamp(18px, 2vw, 24px);
+}
+
+.add-review-section {
+  background-color: #0f0d0d28;
+  box-shadow: 0 2px 10px rgba(211, 128, 128, 0.1);
+  padding: clamp(15px, 2vw, 20px);
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.add-review-section a {
+  color: #BB2D3B;
+  text-decoration: underline;
+  font-size: clamp(12px, 1.2vw, 16px);
+}
+
+.review-form .form-group {
+  margin-bottom: 15px;
+}
+
+.review-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: clamp(12px, 1.2vw, 16px);
+}
+
+.review-form select {
+  padding: clamp(6px, 1vw, 8px);
+  border-radius: 4px;
+  border: 1px solid #e05b5b;
+  font-size: clamp(12px, 1.2vw, 14px);
+}
+
+.review-form textarea {
+  width: 100%;
+  min-height: clamp(80px, 10vw, 100px);
+  padding: clamp(8px, 1vw, 10px);
+  border-radius: 4px;
+  border: 1px solid #4d42427c;
+  resize: vertical;
+  background-color: #0f0d0d28;
+  font-size: clamp(12px, 1.2vw, 14px);
+}
+
+.submit-review-btn {
+  background-color: #BB2D3B;
+  color: white;
+  border: none;
+  padding: clamp(8px, 1vw, 10px) clamp(15px, 2vw, 20px);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: clamp(12px, 1.2vw, 16px);
+}
+
+.submit-review-btn:hover {
+  background-color: #b2070f;
+}
+
+.existing-reviews {
+  margin-top: 20px;
+}
+
+.reviews-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(300px, 45vw, 500px), 1fr));
+  gap: clamp(10px, 2vw, 20px);
+}
+
+.review-card {
+  background-color: #0f0d0d28;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(211, 128, 128, 0.1);
+  padding: clamp(10px, 1.5vw, 15px);
+  transition: transform 0.2s;
+}
+
+.review-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Ajuste del encabezado de la reseña */
+.user-review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #8a0707;
+}
+
+.user-info {
+  display: flex;
+  align-items: center; /* Avatar y nombre alineados verticalmente */
+}
+
+/* Avatar */
+.avatar-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.avatar-small img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #BB2D3B;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.username {
+  color: white;
+  font-size: clamp(14px, 1.5vw, 16px);
+}
+
+.review-rating {
+  color: #f5c518;
+  font-size: clamp(14px, 1.5vw, 18px);
+  text-align: right; /* Calificación alineada a la derecha */
+}
+
+.review-date {
+  color: #BB2D3B;
+  font-size: clamp(10px, 1vw, 14px);
+  text-align: center; /* Fecha centrada */
+}
+
+.review-body {
+  line-height: 1.5;
+  font-size: clamp(12px, 1.2vw, 14px);
+  text-align: left; /* Comentario alineado a la izquierda */
+}
+
+.no-reviews {
+  margin-top: 2%;
+  text-align: center;
+  color: white;
+  font-style: italic;
+  padding: clamp(15px, 2vw, 20px);
+  background-color: #0f0d0d28;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(211, 128, 128, 0.1);
+  font-size: clamp(12px, 1.5vw, 16px);
+}
+
+/* Estilos para la paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.pagination-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.pagination-btn:disabled {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #666;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  color: white;
+  font-size: clamp(12px, 1.2vw, 14px);
+}
+
+/* Media Queries */
+
+/* Tablets (768px y menos) */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: clamp(0.75rem, 2vw, 1rem);
+  }
+
+  .navbar-menu {
+    flex-direction: column;
+    width: 100%;
+    gap: clamp(0.75rem, 2vw, 1rem);
+    margin-top: 1rem;
+  }
+
+  .navbar-brand a {
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  }
+
+  .navbar-item {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+  }
+
+  .welcome-message {
+    margin-right: 0;
+    text-align: center;
+  }
+
+  .logout-button {
+    width: 100%;
+    padding: clamp(0.5rem, 1.5vw, 0.75rem);
+  }
+
+  .container {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  .movie-item {
+    padding: 8px;
+  }
+}
+
+/* Móviles (480px y menos) */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.75rem;
+  }
+
+  .movie-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 6px;
+  }
+
+  .movie-thumbnail {
+    width: 100%;
+    max-width: 100px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .user-review-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .review-rating {
+    text-align: left;
+    margin-top: 5px;
+  }
+}
+
+/* Pantallas grandes (min-width: 768px) */
+@media (min-width: 768px) {
+  .movie-details {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .poster {
+    flex: 0 0 clamp(250px, 30vw, 320px);
+  }
+
+  .details {
+    flex: 1;
+    padding-left: 20px;
+  }
+}

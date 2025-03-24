@@ -1,0 +1,114 @@
+.movie-card {
+    flex: 0 0 auto;
+    position: relative;
+    transition: transform 0.3s ease;
+    border-radius: 8px;
+    overflow: hidden;
+    width: calc((100% / 5) - 13px); /* Para 5 películas con espaciado */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.103);
+  }
+  
+  .movie-card:hover {
+    transform: scale(1.02);
+    z-index: 5;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  }
+  
+  .movie-poster {
+    width: 100%;
+    aspect-ratio: 2/3; /* Mantiene relación de aspecto de poster de película */
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+  }
+  
+  .movie-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+    color: rgb(255, 255, 255);
+    padding: 16px 8px 8px;
+    text-align: center;
+    font-size: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Estilo para el badge de ranking */
+  .ranking-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(29, 28, 28, 0.788); /* Rojo de Netflix */
+    color: #BB2D3B;
+    font-size: 20px;
+    font-weight: bold;
+    width: 36px;
+    height: 36px;
+    border-radius: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  }
+  
+
+  
+  /* Estilos responsivos para las tarjetas */
+  @media (max-width: 1400px) {
+    .movie-card {
+      width: calc((100% / 5) - 13px); /* 5 películas */
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    .movie-card {
+      width: calc((100% / 4) - 12px); /* 4 películas */
+    }
+    .movie-title {
+      font-size: 14px;
+    }
+    .ranking-badge {
+      width: 32px;
+      height: 32px;
+      font-size: 18px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .movie-card {
+      width: calc((100% / 3) - 10px); /* 3 películas */
+    }
+    .movie-title {
+      font-size: 12px;
+      padding: 12px 6px 6px;
+    }
+    .ranking-badge {
+      width: 28px;
+      height: 28px;
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .movie-card {
+      width: calc((100% / 2) - 8px); /* 2 películas */
+    }
+    .ranking-badge {
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 320px) {
+    .movie-card {
+      width: 100%; /* 1 película */
+    }
+  }
