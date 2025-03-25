@@ -1,6 +1,5 @@
-// src/Context/AuthContext.jsx
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { login, getUserData } from '../api'; // Importamos las funciones de api.js
+import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5080";
 export const AuthContext = createContext();
@@ -11,33 +10,74 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [avatar, setAvatar] = useState(""); // Estado para el avatar
+  const [avatar, setAvatar] = useState("");
 
-  // Verificar la autenticación al cargar la aplicación
+  // Función para hacer peticiones autenticadas
+  const authRequest = async (url, method = 'GET', data = null) => {
+    const token = localStorage.getItem('token');
+    const config = {
+      method,
+      url: `${API_URL}${url}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': token
+      },
+      data
+    };
+    return axios(config);
+  };
+
+  // Función para login directa en el contexto
+  const loginUser = async (credentials) => {
+    try {
+      const response = await axios.post(`${API_URL}/api/auth/login`, credentials);
+      const { token, user } = response.data;
+      
+      localStorage.setItem("token", token);
+      setUser(user);
+      setIsAuthenticated(true);
+      if (user.avatar) {
+        setAvatar(`${API_URL}/uploads/avatars/${user.avatar}`);
+      }
+      
+      return { success: true, user };
+    } catch (error) {
+      console.error("Login error:", error.response?.data || error.message);
+      throw error;
+    }
+  };
+
+  // Función para obtener datos del usuario
+  const fetchUserData = async () => {
+    try {
+      const response = await authRequest('/api/auth/me');
+      return response.data.user;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // Verificar autenticación al cargar
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem('token');
-
       if (!token) {
         setLoading(false);
         return;
       }
 
       try {
-        const userData = await getUserData(); // Usamos la función de api.js
+        const userData = await fetchUserData();
         setUser(userData);
         setIsAuthenticated(true);
-
-        // Cargar el avatar desde la base de datos
         if (userData.avatar) {
           setAvatar(`${API_URL}/uploads/avatars/${userData.avatar}`);
         }
       } catch (error) {
-        console.error('Error al verificar autenticación:', error);
+        console.error('Auth check failed:', error);
         localStorage.removeItem('token');
-        setIsAuthenticated(false);
         setUser(null);
-        setAvatar("");
+        setIsAuthenticated(false);
       } finally {
         setLoading(false);
       }
@@ -46,71 +86,12 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  // Función para iniciar sesión
-  const loginUser = async (credentials, onSuccess) => {
-    try {
-      console.log('📤 Intentando login con:', credentials);
-      const data = await login(credentials.email, credentials.password); // Usamos la función de api.js
-
-      localStorage.setItem("token", data.token);
-      console.log('✅ Token guardado:', data.token);
-
-      // Obtener datos del usuario después de iniciar sesión
-      const userData = await getUserData();
-      console.log('✅ Datos del usuario obtenidos:', userData);
-
-      // Actualizar el estado del usuario y el avatar
-      setUser(userData);
-      setIsAuthenticated(true);
-
-      if (userData.avatar) {
-        setAvatar(`${API_URL}/uploads/avatars/${userData.avatar}`);
-      }
-
-      // Llamar a la función de redirección si existe
-      if (onSuccess) onSuccess();
-    } catch (error) {
-      console.error("Error en proceso de login:", error);
-      throw error; // Re-lanzar el error para que Login.jsx lo maneje
-    }
-  };
-
-  // Función para cerrar sesión
-  const logout = (onSuccess) => {
-    console.log('🔒 Cerrando sesión...');
+  // Función para logout
+  const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
     setIsAuthenticated(false);
-    setAvatar(""); // Limpiar el avatar al cerrar sesión
-
-    // Llamar a la función de redirección si existe
-    if (onSuccess) onSuccess();
-  };
-
-  // Función para actualizar el usuario
-  const updateUser = (updatedUser) => {
-    console.log('🔄 Actualizando usuario en el contexto:', updatedUser);
-    setUser(updatedUser);
-    // Actualizar el avatar si está presente en los datos del usuario
-    if (updatedUser.avatar) {
-      setAvatar(`${API_URL}/uploads/avatars/${updatedUser.avatar}`);
-    } else {
-      setAvatar(""); // Limpiar el avatar si no hay uno nuevo
-    }
-  };
-
-  // Función para actualizar los datos del usuario (favoritos y "Ver más tarde")
-  const refreshUserData = async () => {
-    try {
-      const userData = await getUserData();
-      setUser(userData);
-      if (userData.avatar) {
-        setAvatar(`${API_URL}/uploads/avatars/${userData.avatar}`);
-      }
-    } catch (error) {
-      console.error('Error al actualizar datos del usuario:', error);
-      logout(); // Si hay un error (por ejemplo, token inválido), cerrar sesión
-    }
+    setAvatar("");
   };
 
   // Valor del contexto
@@ -119,12 +100,16 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated,
     loading,
     avatar,
-    login: loginUser, // Renombramos para evitar conflictos con la importación
+    login: loginUser, // Usamos la función interna
     logout,
-    setUser,
-    setIsAuthenticated,
-    updateUser,
-    refreshUserData, // Añadimos la función para actualizar los datos del usuario
+    fetchUserData,
+    authRequest, // Para otras peticiones autenticadas
+    updateUser: (updatedUser) => {
+      setUser(updatedUser);
+      if (updatedUser.avatar) {
+        setAvatar(`${API_URL}/uploads/avatars/${updatedUser.avatar}`);
+      }
+    }
   };
 
   return (

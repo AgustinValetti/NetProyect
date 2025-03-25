@@ -23,7 +23,6 @@ import MovieList from "./Components/MovieList/MovieList.jsx";
 import MoviesPage from "./Pages/MoviesPage.jsx";
 import SeriesPage from "./Pages/SeriesPage.jsx";
 import ActorsPage from "./Pages/ActorsPage.jsx";
-import WatchLaterPage from "./Pages/WatchLaterPage.jsx"; // Importamos WatchLaterPage
 
 import "./index.css";
 import "./Components/Buscador/Buscador.css";
@@ -67,7 +66,6 @@ function App() {
             {/* Rutas protegidas */}
             <Route element={<ProtectedRoute />}>
               <Route path="/profile" element={<Profile />} />
-              <Route path="/watchlater" element={<WatchLaterPage />} /> {/* Nueva ruta protegida */}
             </Route>
           </Routes>
         </div>

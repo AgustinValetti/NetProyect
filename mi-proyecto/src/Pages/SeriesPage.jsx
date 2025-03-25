@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import Modal from '../Components/Modal/Modal';
 import './ContentPage.css';
 import { useAuth } from '../Context/AuthContext';
-import { addWatchLaterSeries, removeWatchLaterSeries } from '../api';
+
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const TMDB_API_URL = 'https://api.themoviedb.org/3';

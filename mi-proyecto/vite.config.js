@@ -7,6 +7,9 @@ export default defineConfig({
   define: {
     'process.env': process.env
   },
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  },
   
   server: {
     proxy: {

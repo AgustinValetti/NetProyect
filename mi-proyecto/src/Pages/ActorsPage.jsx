@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import './ContentPage.css';
 import { useAuth } from '../Context/AuthContext';
-import { addFavoriteActor, removeFavoriteActor } from '../api';
+
 
 // Hook personalizado para debounce
 const useDebounce = (callback, delay) => {
