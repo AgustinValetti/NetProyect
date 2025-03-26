@@ -3,7 +3,6 @@ import Modal from '../Components/Modal/Modal';
 import './ContentPage.css';
 import { useAuth } from '../Context/AuthContext';
 
-
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const TMDB_API_URL = 'https://api.themoviedb.org/3';
 
@@ -39,7 +38,7 @@ const MoviesPage = () => {
   const [trailerUrl, setTrailerUrl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(35); // Por defecto, 35 en pantallas grandes
+  const [itemsPerPage, setItemsPerPage] = useState(35);
 
   const searchTermRef = useRef(searchTerm);
 
@@ -47,22 +46,20 @@ const MoviesPage = () => {
     searchTermRef.current = searchTerm;
   }, [searchTerm]);
 
-  // Función para ajustar el número de elementos por página según el tamaño de la pantalla
   const updateItemsPerPage = () => {
     if (window.innerWidth <= 768) {
-      setItemsPerPage(10); // 10 elementos en pantallas pequeñas (tablets y móviles)
+      setItemsPerPage(10);
     } else if (window.innerWidth <= 480) {
-      setItemsPerPage(5); // 5 elementos en pantallas muy pequeñas (móviles)
+      setItemsPerPage(5);
     } else {
-      setItemsPerPage(35); // 35 elementos en pantallas grandes
+      setItemsPerPage(35);
     }
   };
 
-  // Escuchar cambios en el tamaño de la pantalla
   useEffect(() => {
-    updateItemsPerPage(); // Ajustar al cargar la página
-    window.addEventListener('resize', updateItemsPerPage); // Ajustar al redimensionar
-    return () => window.removeEventListener('resize', updateItemsPerPage); // Limpiar listener
+    updateItemsPerPage();
+    window.addEventListener('resize', updateItemsPerPage);
+    return () => window.removeEventListener('resize', updateItemsPerPage);
   }, []);
 
   const fetchMovies = useDebounce(async () => {
@@ -142,7 +139,7 @@ const MoviesPage = () => {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1); // Resetear a la primera página al buscar
+    setCurrentPage(1);
   };
 
   const addToWatchLater = async (movie) => {
@@ -154,7 +151,7 @@ const MoviesPage = () => {
         release_date: movie.release_date,
       };
       await addWatchLaterMovie(movieData);
-      await refreshUserData(); // Actualizamos los datos del usuario
+      await refreshUserData();
     } catch (err) {
       console.error('Error al agregar película a "Ver más tarde":', err);
     }
@@ -163,18 +160,16 @@ const MoviesPage = () => {
   const removeFromWatchLater = async (movieId) => {
     try {
       await removeWatchLaterMovie(movieId);
-      await refreshUserData(); // Actualizamos los datos del usuario
+      await refreshUserData();
     } catch (err) {
       console.error('Error al quitar película de "Ver más tarde":', err);
     }
   };
 
-  // Calcular el índice de inicio y fin para la paginación
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = movies.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Cambiar de página
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -264,8 +259,7 @@ const MoviesPage = () => {
       <Modal
         isOpen={modalOpen}
         onClose={closeModal}
-        title={selectedMovie?.title}
-        overview={selectedMovie?.overview}
+        selectedMovie={selectedMovie} // Pasar selectedMovie como prop
         trailerUrl={trailerUrl}
       />
     </div>

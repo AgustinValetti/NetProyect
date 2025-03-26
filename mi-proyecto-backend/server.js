@@ -4,7 +4,7 @@ import cors from 'cors';
 import fileUpload from 'express-fileupload';
 import authRoutes from './src/routes/auth.js';
 import reviewRoutes from './src/routes/reviews.js';
-import userRoutes from './src/routes/userRoutes.js'; // Ruta corregida
+import axios from 'axios'; // Importar axios
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -19,11 +19,12 @@ dotenv.config();
 // Verificar que las variables de entorno están definidas
 if (!process.env.MONGO_URI) console.error('❌ MONGO_URI no está definido en .env');
 if (!process.env.JWT_SECRET) console.error('❌ JWT_SECRET no está definido en .env');
+if (!process.env.TMDB_API_KEY) console.error('❌ TMDB_API_KEY no está definido en .env');
 
 const app = express();
 
-// Habilitar CORS para el frontend en localhost:5173 y 5175
-app.use(cors({ origin: ['http://localhost:5173', 'http://localhost:5175'] }));
+// Habilitar CORS para el frontend en localhost:5173, 5175 y 5177
+app.use(cors({ origin: ['http://localhost:5173', 'http://localhost:5175', 'http://localhost:5177'] }));
 
 // Middleware para analizar JSON y datos de formularios
 app.use(express.json());
@@ -61,17 +62,56 @@ mongoose
     process.exit(1);
   });
 
-// Rutas
+// Rutas de la API
 app.use('/api/auth', authRoutes);
 app.use('/reviews', reviewRoutes);
-app.use('/api/users', userRoutes); // Usar userRoutes importado
 
-// server.js (al final, después de todas las rutas)
+// Endpoint para obtener el reparto
+app.get('/api/tmdb/credits/:mediaType/:id', async (req, res) => {
+  const { mediaType, id } = req.params;
+  const TMDB_API_KEY = process.env.TMDB_API_KEY;
+
+  if (!TMDB_API_KEY) {
+    return res.status(500).json({ error: 'API Key de TMDB no configurada.' });
+  }
+
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/${mediaType}/${id}/credits?api_key=${TMDB_API_KEY}`
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error al obtener el reparto desde TMDB:', error.message);
+    res.status(500).json({ error: 'Error al obtener el reparto', details: error.message });
+  }
+});
+
+// Endpoint para obtener datos del actor
+app.get('/api/tmdb/person/:actorId', async (req, res) => {
+  const { actorId } = req.params;
+  const TMDB_API_KEY = process.env.TMDB_API_KEY;
+
+  if (!TMDB_API_KEY) {
+    return res.status(500).json({ error: 'API Key de TMDB no configurada.' });
+  }
+
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/person/${actorId}?api_key=${TMDB_API_KEY}&append_to_response=credits`
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error al obtener datos del actor desde TMDB:', error.message);
+    res.status(500).json({ error: 'Error al obtener datos del actor', details: error.message });
+  }
+});
+
+// Middleware para manejar rutas no encontradas (404)
 app.use((req, res) => {
   res.status(404).json({ message: 'Ruta no encontrada' });
 });
 
-// Captura de errores generales (asegurarnos de que siempre devolvamos JSON)
+// Captura de errores generales
 app.use((err, req, res, next) => {
   console.error('🔥 Error inesperado:', err.stack);
   res.status(500).json({ message: 'Error interno del servidor', details: err.message });

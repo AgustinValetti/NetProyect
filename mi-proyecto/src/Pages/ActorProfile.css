@@ -1,0 +1,240 @@
+/* ActorProfile.css */
+.actor-profile {
+    padding: 2rem;
+    color: white;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Contenedor principal - Horizontal */
+.actor-header {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* Columna Foto - Ahora más cuadrada */
+.actor-photo-column {
+    flex: 0 0 220px; /* Ancho fijo reducido */
+}
+
+.actor-photo {
+    width: 220px; /* Mismo que el contenedor */
+    height: 280px; /* Altura reducida */
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Columna Info - Ocupa el resto del espacio */
+.actor-info-column {
+    flex: 1;
+}
+
+.actor-name {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+/* Grid de información básica */
+.actor-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.meta-item {
+    font-size: 0.95rem;
+    color: #d1d5db;
+}
+
+.meta-item strong {
+    color: white;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+/* Biografía */
+.bio-section {
+    margin-top: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    color: white;
+    border-bottom: 2px solid #BB2D3B;
+    padding-bottom: 0.3rem;
+}
+
+.bio-text {
+    line-height: 1.6;
+    color: #d1d5db;
+    font-size: 0.95rem;
+}
+
+/* Sección Filmografía */
+.filmography-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.filmography-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+.filmography-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 3px;
+    background: #BB2D3B;
+}
+
+.credits-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.credit-item {
+    background: rgba(48, 34, 34, 0.8);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+}
+
+.credit-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.credit-poster {
+    height: 280px;
+    background: #1a0504;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+}
+
+.credit-poster-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.credit-item:hover .credit-poster-img {
+    transform: scale(1.04);
+}
+
+.credit-poster-placeholder {
+    color: #6b7280;
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+}
+
+.credit-info h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.4rem;
+    color: white;
+    font-weight: 500;
+    text-align: center;
+}
+
+.credit-info p {
+    font-size: 0.85rem;
+    color: #d1d5db;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .actor-main-container {
+        gap: 2rem;
+    }
+    
+    .actor-photo-container {
+        flex: 0 0 220px;
+    }
+    
+    .actor-photo {
+        height: 320px;
+    }
+    
+    .credits-list {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    
+    .credit-poster {
+        height: 260px;
+    }
+}
+
+@media (max-width: 768px) {
+    .actor-main-container {
+        flex-direction: column;
+    }
+    
+    .actor-photo-container {
+        flex: 0 0 auto;
+        width: 200px;
+        margin: 0 auto;
+    }
+    
+    .actor-photo {
+        height: 300px;
+    }
+    
+    .credits-list {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1.2rem;
+    }
+    
+    .credit-poster {
+        height: 240px;
+    }
+}
+
+@media (max-width: 576px) {
+    .actor-profile {
+        padding: 1.5rem;
+    }
+    
+    .actor-photo {
+        height: 260px;
+        width: 180px;
+    }
+    
+    .credits-list {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+    
+    .credit-poster {
+        height: 210px;
+    }
+    
+    .actor-info h1 {
+        font-size: 2rem;
+        text-align: center;
+    }
+    
+    .bio-content h2 {
+        font-size: 1.3rem;
+    }
+}

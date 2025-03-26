@@ -1,112 +1,144 @@
-/* src/Components/Modal/Modal.css */
+/* Modal.css */
+
+/* Estilo del fondo del modal */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-content {
-    background-color: #2a2a2a;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 800px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    padding: 2rem;
-    color: white;
-  }
-  
-  .modal-close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #BB2D3B;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .modal-close-button:hover {
-    background-color: #bd0811;
-  }
-  
-  .modal-body {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  
-  .modal-trailer {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-    height: 0;
-    overflow: hidden;
-  }
-  
-  .modal-trailer iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .modal-description h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .modal-description p {
-    font-size: 1rem;
-    color: #d1d5db;
-    line-height: 1.5;
-  }
-  
-  /* Media Query para tablets (768px y menos) */
-  @media (max-width: 768px) {
-    .modal-content {
-      width: 95%;
-      padding: 1.5rem;
-    }
-  
-    .modal-description h3 {
-      font-size: 1.3rem;
-    }
-  
-    .modal-description p {
-      font-size: 0.9rem;
-    }
-  }
-  
-  /* Media Query para móviles (480px y menos) */
-  @media (max-width: 480px) {
-    .modal-content {
-      width: 98%;
-      padding: 1rem;
-    }
-  
-    .modal-trailer {
-      padding-bottom: 75%; /* Ajusta el aspect ratio para pantallas pequeñas */
-    }
-  
-    .modal-description h3 {
-      font-size: 1.2rem;
-    }
-  
-    .modal-description p {
-      font-size: 0.85rem;
-    }
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8); /* Fondo oscuro semi-transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* Contenedor del contenido del modal */
+.modal-content {
+  background: #1a1a1a; /* Fondo oscuro para el modal */
+  border-radius: 12px;
+  padding: 25px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  color: #fff; /* Texto blanco para contraste */
+}
+
+/* Botón de cerrar */
+.modal-close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal-close-button:hover {
+  color: #BB2D3B; /* Color rojo oscuro al pasar el mouse, alineado con la estética */
+}
+
+/* Título del modal */
+.modal-content h2 {
+  margin: 0 0 20px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Cuerpo del modal */
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Tráiler */
+.modal-trailer {
+  position: relative;
+  padding-bottom: 56.25%; /* Proporción 16:9 para el iframe */
+  height: 0;
+  overflow: hidden;
+}
+
+.modal-trailer iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+}
+
+/* Descripción */
+.modal-description h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.modal-description p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #d3d3d3; /* Texto gris claro para la descripción */
+}
+
+/* Sección de reparto */
+.modal-cast {
+  margin-top: 20px;
+}
+
+.modal-cast h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.modal-cast p {
+  font-size: 16px;
+  color: #d3d3d3;
+}
+
+/* Lista de actores */
+.cast-list {
+  display: flex;
+  flex-direction: column; /* Mostrar actores uno debajo del otro */
+}
+
+/* Estilo de los enlaces de los actores */
+.cast-link {
+  display: block; /* Hacer que el enlace ocupe todo el ancho */
+  padding: 10px 0; /* Espaciado vertical */
+  color: #fff; /* Texto blanco */
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.2s ease;
+  position: relative; /* Para posicionar la línea divisoria */
+}
+
+/* Línea divisoria entre actores */
+.cast-link:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #BB2D3B; /* Línea de color rojo oscuro */
+}
+
+/* Efecto hover para los actores */
+.cast-link:hover {
+  color: #BB2D3B; /* Color rojo oscuro al pasar el mouse */
+  transform: translateX(5px); /* Pequeña animación de desplazamiento */
+}
