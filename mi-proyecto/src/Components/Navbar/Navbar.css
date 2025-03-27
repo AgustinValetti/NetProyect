@@ -4,45 +4,120 @@
   justify-content: space-between;
   align-items: center;
   background: linear-gradient(135deg, #1a0504 0%, #3b0a0e 100%);
-  padding: 1rem 2rem;
+  padding: 0 1rem;
   color: white;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
+  height: 80px;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, 
+    rgba(248, 113, 113, 0.2) 0%, 
+    rgba(189, 8, 17, 0.8) 50%, 
+    rgba(248, 113, 113, 0.2) 100%
+  ) 1;
+  transition: border-image 0.5s ease;
 }
 
+.navbar:hover {
+  border-image: linear-gradient(90deg, 
+    rgba(248, 113, 113, 0.5) 0%, 
+    rgba(189, 8, 17, 1) 50%, 
+    rgba(248, 113, 113, 0.5) 100%
+  ) 1;
+}
+
+/* Contenedor principal */
+.navbar-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* Sección izquierda (logo + explorar) */
 .navbar-left {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  height: 100%;
+  gap: 1rem;
+  min-width: 0;
+}
+
+/* Logo */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-shrink: 0;
 }
 
 .navbar-brand a {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: bold;
   color: #f87171;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 0.5rem;
+  white-space: nowrap;
 }
 
 .navbar-brand a:hover {
   color: #bd0811;
+  background: rgba(187, 45, 59, 0.1);
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, 
+    rgba(248, 113, 113, 0) 0%, 
+    rgba(189, 8, 17, 0.8) 50%, 
+    rgba(248, 113, 113, 0) 100%
+  ) 1;
 }
 
+/* Menú Explorar - Corregido */
 .navbar-center {
+  display: flex;
+  align-items: center;
+  height: 100%;
   position: relative;
-  transition: all 0.3s ease; /* Animación suave para el menú */
+  flex-shrink: 0;
+  right: 30px;
+}
+
+.dropdown {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
 .dropdown-toggle {
   font-size: 1rem;
   color: white;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  padding: 0 0.8rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .dropdown-toggle:hover {
   color: #f87171;
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, 
+    rgba(248, 113, 113, 0) 0%, 
+    rgba(189, 8, 17, 0.8) 50%, 
+    rgba(248, 113, 113, 0) 100%
+  ) 1;
 }
 
 .dropdown-menu {
@@ -52,9 +127,9 @@
   left: 0;
   background: linear-gradient(135deg, #1a0504 0%, #3b0a0e 100%);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px;
   padding: 0.5rem 0;
-  min-width: 150px;
+  min-width: 180px;
   z-index: 1000;
 }
 
@@ -64,11 +139,12 @@
 
 .dropdown-item {
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 0.7rem 1.2rem;
   color: white;
   text-decoration: none;
-  font-size: 0.95rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .dropdown-item:hover {
@@ -76,236 +152,169 @@
   color: #f87171;
 }
 
-.navbar-menu {
+/* Sección derecha (auth) */
+.navbar-right {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
-  transition: all 0.3s ease; /* Animación suave para el menú */
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .welcome-message {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #d1d5db;
-  transition: font-size 0.3s ease;
+  white-space: nowrap;
 }
 
 .navbar-item {
   color: #f87171;
   text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.3s ease, font-size 0.3s ease;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  padding: 0 0.7rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .navbar-item:hover {
   color: #bd0811;
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, 
+    rgba(248, 113, 113, 0) 0%, 
+    rgba(189, 8, 17, 0.8) 50%, 
+    rgba(248, 113, 113, 0) 100%
+  ) 1;
 }
 
 .logout-button {
-  background: #BB2D3B;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease, transform 0.3s ease, padding 0.3s ease, font-size 0.3s ease;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  align-self: center;
 }
 
 .logout-button:hover {
   background: #bd0811;
-  transform: translateY(-2px);
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, 
+    rgba(248, 113, 113, 0) 0%, 
+    rgba(189, 8, 17, 0.8) 50%, 
+    rgba(248, 113, 113, 0) 100%
+  ) 1;
 }
 
-/* Botón hamburguesa (oculto en escritorio) */
-.navbar-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: color 0.3s ease, font-size 0.3s ease;
-}
-
-/* Media Query para tablets y móviles (768px y menos) */
+/* Media Queries mejoradas */
 @media (max-width: 768px) {
   .navbar {
-    flex-wrap: wrap;
-    padding: 0.75rem 1rem; /* Reducimos el padding */
+    padding: 0 0.8rem;
   }
-
+  
   .navbar-left {
-    width: 100%;
-    justify-content: space-between;
+    gap: 0.8rem;
   }
-
-  .navbar-toggle {
-    display: block;
-    color: white; /* Aseguramos que el botón hamburguesa sea blanco */
+  
+  .navbar-brand a {
+    font-size: 0.7rem;
+    
   }
+  
+  .dropdown-toggle {
+    padding: 0 0.6rem;
+    font-size: 0.95rem;
+  }
+  
+  .navbar-right {
+    gap: 0.8rem;
+  }
+}
 
-  .navbar-center {
-    display: none;
-    width: 100%;
-    padding: 1rem 0;
-    background: linear-gradient(135deg, #1a0504 0%, #3b0a0e 100%);
-    position: absolute;
-    top: 100%;
+@media (max-width: 600px) {
+  .navbar {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .navbar-container {
+    width: auto;
+    min-width: 100%;
+  }
+  
+  .navbar-brand {
+    position: sticky;
     left: 0;
-    right: 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    transform: translateY(-10px); /* Para la animación de deslizamiento */
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    z-index: 2;
+    padding-right: 0.5rem;
+    
   }
 
-  .navbar-center.active {
-    display: block;
-    transform: translateY(0);
-    opacity: 1;
+  .navbar-brand a {
+    font-size: 0.1rem;
+    
   }
+}
 
-  .dropdown {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+@media (max-width: 510px) {
+  .navbar {
+    padding: 0 0.5rem;
   }
-
-  .dropdown-toggle {
+  
+  .navbar-brand a {
     font-size: 1.2rem;
-    padding: 0.5rem 0;
+    padding: 0 0.3rem;
   }
-
+  
+  .dropdown-toggle {
+    font-size: 0.9rem;
+    padding: 0 0.5rem;
+  }
+  
   .dropdown-menu {
-    position: static;
-    display: block;
-    background: none;
-    box-shadow: none;
-    padding: 0.5rem 0;
-    text-align: center;
+    min-width: 160px;
   }
-
-  .dropdown-item {
-    font-size: 1.1rem;
-    padding: 0.75rem 0; /* Más espacio para facilitar el toque */
+  
+  .navbar-right {
+    gap: 0.6rem;
   }
-
-  .navbar-menu {
-    display: none;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 0;
-    background: linear-gradient(135deg, #1a0504 0%, #3b0a0e 100%);
-    transform: translateY(-10px); /* Para la animación de deslizamiento */
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-
-  .navbar-menu.active {
-    display: flex;
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  .welcome-message {
-    font-size: 1.1rem;
-  }
-
-  .navbar-item {
-    font-size: 1.1rem;
-    padding: 0.5rem 0; /* Más espacio para facilitar el toque */
-  }
-
-  .logout-button {
-    font-size: 1.1rem;
-    padding: 0.75rem 1.5rem;
-    width: 100%; /* Ocupa todo el ancho para mejor accesibilidad */
-    max-width: 200px; /* Limita el ancho máximo */
-  }
-}
-
-/* Media Query para móviles pequeños (480px y menos) */
-@media (max-width: 480px) {
-  .navbar {
-    padding: 0.5rem 0.75rem; /* Aún más compacto */
-  }
-
-  .navbar-brand a {
-    font-size: 1.3rem;
-  }
-
-  .navbar-toggle {
-    font-size: 1.3rem;
-    color: white; /* Aseguramos que el botón hamburguesa sea blanco */
-  }
-
-  .dropdown-toggle {
-    font-size: 1.1rem;
-  }
-
-  .dropdown-item {
-    font-size: 1rem;
-    padding: 0.5rem 0;
-  }
-
-  .navbar-menu {
-    gap: 0.75rem; /* Reducimos el espacio entre elementos */
-  }
-
-  .welcome-message {
-    font-size: 0.95rem;
-  }
-
-  .navbar-item {
-    font-size: 0.95rem;
-    padding: 0.4rem 0;
-  }
-
-  .logout-button {
-    font-size: 0.95rem;
-    padding: 0.5rem 1rem;
-    max-width: 180px; /* Ajustamos el ancho máximo */
-  }
-}
-
-/* Media Query para pantallas muy pequeñas (360px y menos) */
-@media (max-width: 360px) {
-  .navbar {
-    padding: 0.5rem;
-  }
-
-  .navbar-brand a {
-    font-size: 1.2rem;
-  }
-
-  .navbar-toggle {
-    font-size: 1.2rem;
-    color: white;
-  }
-
-  .dropdown-toggle {
-    font-size: 1rem;
-  }
-
-  .dropdown-item {
-    font-size: 0.9rem;
-    padding: 0.4rem 0;
-  }
-
-  .welcome-message {
-    font-size: 0.9rem;
-  }
-
+  
   .navbar-item {
     font-size: 0.9rem;
-    padding: 0.3rem 0;
+    padding: 0 0.5rem;
   }
-
+  
   .logout-button {
-    font-size: 0.9rem;
     padding: 0.4rem 0.8rem;
-    max-width: 160px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .navbar-brand a {
+    font-size: 1.1rem;
+  }
+  
+  .dropdown-toggle {
+    font-size: 0.85rem;
+  }
+  
+  .welcome-message {
+    font-size: 0.8rem;
+  }
+  
+  .navbar-item {
+    font-size: 0.85rem;
   }
 }

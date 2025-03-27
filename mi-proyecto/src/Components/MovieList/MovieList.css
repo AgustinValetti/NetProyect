@@ -8,8 +8,9 @@
 /* Título de la sección */
 .movie-list h1 {
   font-size: clamp(1.5rem, 3vw, 2rem);
-  color: #BB2D3B;
+  color: #f87171;
   margin-bottom: 40px;
+  text-shadow: 0 2px 5px rgba(187, 45, 59, 0.3);
 }
 
 /* Carrusel */
@@ -39,13 +40,18 @@
   margin: 1%;
   flex: 0 0 calc(33.333% - 40px);
   min-width: 0;
-  background: radial-gradient(150deg, #302222 0%, #1a0504 100%);
   border-radius: 8px;
   padding: clamp(10px, 2vw, 20px);
   text-align: left;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 2px 10px rgba(211, 128, 128, 0.1);
+  box-shadow: 0 2px 10px rgba(187, 45, 59, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.show-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(187, 45, 59, 0.4);
 }
 
 /* Portada de la película */
@@ -53,6 +59,7 @@
   width: 100%;
   border-radius: 8px;
   overflow: hidden;
+  border: 1px solid rgba(248, 113, 113, 0.3);
 }
 
 .poster-image {
@@ -60,6 +67,10 @@
   height: auto;
   display: block;
   transition: transform 0.3s ease;
+}
+
+.show-poster:hover .poster-image {
+  transform: scale(1.05);
 }
 
 /* Detalles de la película */
@@ -70,19 +81,24 @@
 
 .show-details h2 {
   font-size: clamp(1rem, 2vw, 1.5rem);
-  color: white;
+  color: #f87171;
   margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.show-details h2:hover {
+  color: #bd0811;
 }
 
 .show-details p {
   font-size: clamp(0.8rem, 1.5vw, 1rem);
-  color: white;
+  color: #d1d5db;
   margin-bottom: 10px;
 }
 
 .show-details .description {
   font-size: clamp(0.7rem, 1.2vw, 0.9rem);
-  color: white;
+  color: #d1d5db;
   line-height: 1.5;
   height: 4.5em;
   overflow: hidden;
@@ -99,9 +115,14 @@
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  cursor: pointer; /* Indica que es interactivo */
+  cursor: pointer;
   transition: all 0.3s ease;
-  border: 2px solid #BB2D3B; /* Borde inicial */
+  border: 2px solid;
+  border-image: linear-gradient(90deg, 
+    rgba(248, 113, 113, 0.2) 0%, 
+    rgba(189, 8, 17, 0.8) 50%, 
+    rgba(248, 113, 113, 0.2) 100%
+  ) 1;
 }
 
 /* Estilo del iframe */
@@ -114,27 +135,31 @@
 
 /* Efecto hover */
 .video-container:hover {
-  transform: scale(1.05); /* Ligero aumento de tamaño */
-  box-shadow: 0 5px 15px rgba(187, 45, 59, 0.5); /* Sombra con tono rojizo */
-  border-color: white; /* Cambio de color del borde */
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(187, 45, 59, 0.5);
+  border-image: linear-gradient(90deg, 
+    rgba(248, 113, 113, 0.5) 0%, 
+    rgba(189, 8, 17, 1) 50%, 
+    rgba(248, 113, 113, 0.5) 100%
+  ) 1;
 }
 
 /* Capa de overlay para hover */
 .video-container::before {
-  content: '▶'; /* Icono de play */
+  content: '▶';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: clamp(20px, 3vw, 40px);
-  color: white;
+  color: #f87171;
   opacity: 0;
   transition: opacity 0.3s ease;
   z-index: 1;
 }
 
 .video-container:hover::before {
-  opacity: 0.8; /* Muestra el icono al hacer hover */
+  opacity: 0.8;
 }
 
 /* Estilo cuando está seleccionado (active) */
@@ -142,13 +167,16 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1); /* Centrado y tamaño normal */
+  transform: translate(-50%, -50%) scale(1);
   width: clamp(300px, 80vw, 800px);
   height: clamp(200px, 45vw, 450px);
   z-index: 1000;
-  border: 3px solid #BB2D3B;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-  background: #1a0504; /* Fondo oscuro elegante */
+  border: 3px solid;
+  border-image: linear-gradient(135deg, 
+    #f87171 0%, 
+    #bd0811 100%
+  ) 1;
+  box-shadow: 0 10px 30px rgba(187, 45, 59, 0.7);
   padding: 10px;
   border-radius: 12px;
 }
@@ -161,26 +189,26 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(26, 5, 4, 0.9);
   z-index: -1;
 }
 
 /* Efecto en el iframe cuando está activo */
 .video-container.active iframe {
-  transform: scale(1); /* Mantener tamaño natural */
+  transform: scale(1);
 }
 
 /* Mensaje cuando no hay tráiler */
 .no-trailer {
   font-size: clamp(0.7rem, 1.2vw, 0.9rem);
-  color: #888;
+  color: #d1d5db;
   text-align: center;
   margin-top: 10px;
 }
 
 /* Botones del carrusel */
 .carousel-button {
-  background: rgba(180, 180, 180, 0.7);
+  background: rgba(248, 113, 113, 0.3);
   color: white;
   border: none;
   border-radius: 50%;
@@ -193,16 +221,18 @@
   position: absolute;
   z-index: 10;
   font-size: clamp(1rem, 2vw, 1.5rem);
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .carousel-button:hover {
-  background: #bb2d3b9a;
+  background: #bd0811;
   transform: scale(1.1);
+  box-shadow: 0 2px 10px rgba(187, 45, 59, 0.5);
 }
 
 .carousel-button:disabled {
   opacity: 0.3;
+  background: rgba(248, 113, 113, 0.1);
 }
 
 .carousel-button.prev {
@@ -213,51 +243,121 @@
   right: clamp(10px, 3vw, 70px);
 }
 
-/* Media Queries para diseño responsive */
-@media (max-width: 900px) {
-  .show-item {
-      flex: 0 0 calc(50% - 20px);
+/* Media Queries mejoradas para diseño responsive */
+@media (max-width: 1024px) {
+  .carousel-content {
+    width: 85%;
+    gap: 15px;
   }
 
-  .carousel-content {
-      width: 90%;
+  .show-item {
+    flex: 0 0 calc(50% - 30px); /* 2 ítems por fila */
+  }
+
+  .movie-list {
+    padding: 15px;
   }
 }
 
-@media (max-width: 600px) {
-  .show-item {
-      flex: 0 0 calc(100% - 20px);
+@media (max-width: 768px) {
+  .carousel-content {
+    width: 90%;
+    gap: 10px;
   }
 
-  .carousel-content {
-      width: 95%;
+  .show-item {
+    flex: 0 0 calc(50% - 20px);
   }
 
   .movie-list h1 {
-      margin-bottom: 20px;
+    margin-bottom: 30px;
+  }
+
+  .video-container {
+    height: clamp(120px, 18vw, 180px);
+  }
+
+  .carousel-button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .carousel-button.prev {
+    left: 10px;
+  }
+
+  .carousel-button.next {
+    right: 10px;
   }
 }
 
 @media (max-width: 480px) {
-  .movie-list {
-      padding: 10px;
+  .carousel-content {
+    width: 95%;
+    gap: 8px;
   }
 
-  .carousel-content {
-      gap: 10px;
+  .show-item {
+    flex: 0 0 calc(100% - 20px); /* 1 ítem por fila */
+  }
+
+  .movie-list {
+    padding: 10px;
+  }
+
+  .movie-list h1 {
+    margin-bottom: 20px;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  }
+
+  .show-details h2 {
+    font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+  }
+
+  .show-details p {
+    font-size: clamp(0.7rem, 1.3vw, 0.9rem);
+  }
+
+  .show-details .description {
+    font-size: clamp(0.6rem, 1vw, 0.8rem);
+    height: 3.6em;
+  }
+
+  .video-container {
+    height: clamp(100px, 15vw, 150px);
   }
 
   .carousel-button {
-      width: 35px;
-      height: 35px;
-      font-size: 1rem;
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
   }
 
   .carousel-button.prev {
-      left: 5px;
+    left: 5px;
   }
 
   .carousel-button.next {
-      right: 5px;
+    right: 5px;
+  }
+}
+
+@media (max-width: 360px) {
+  .carousel-content {
+    width: 98%;
+    gap: 5px;
+  }
+
+  .show-item {
+    padding: 8px;
+  }
+
+  .movie-list h1 {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .video-container {
+    height: clamp(80px, 14vw, 120px);
   }
 }
