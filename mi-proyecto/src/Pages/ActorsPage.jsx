@@ -1,8 +1,10 @@
 // src/Pages/ActorsPage.jsx
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './ContentPage.css';
 import { useAuth } from '../Context/AuthContext';
 
+const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const TMDB_API_URL = 'https://api.themoviedb.org/3';
 
 // Hook personalizado para debounce
 const useDebounce = (callback, delay) => {
@@ -26,17 +28,15 @@ const useDebounce = (callback, delay) => {
   return debouncedCallback;
 };
 
-const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-const TMDB_API_URL = 'https://api.themoviedb.org/3';
-
 const ActorsPage = () => {
-  const { isAuthenticated, user, refreshUserData } = useAuth();
+  const { isAuthenticated, user, authRequest, updateUser } = useAuth();
   const [actors, setActors] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedActor, setSelectedActor] = useState(null);
   const [actorMovies, setActorMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const searchTermRef = useRef(searchTerm);
 
@@ -117,24 +117,54 @@ const ActorsPage = () => {
   };
 
   const addToFavorites = async (actor) => {
+    if (!isAuthenticated) {
+      setMessage('Por favor, inicia sesión para agregar actores a favoritos');
+      setTimeout(() => setMessage(null), 3000);
+      return;
+    }
+
+    if (user?.favoriteActors?.some((a) => a.id === actor.id)) {
+      setMessage('Este actor ya está en tu lista de favoritos');
+      setTimeout(() => setMessage(null), 3000);
+      return;
+    }
+
     try {
       const actorData = {
         id: actor.id,
         name: actor.name,
         profile_path: actor.profile_path,
+        known_for_department: actor.known_for_department,
       };
-      await addFavoriteActor(actorData);
-      await refreshUserData(); // Actualizamos los datos del usuario
+      await authRequest('/api/favorites/actors', 'POST', actorData);
+      const updatedFavorites = await authRequest('/api/favorites/actors', 'GET');
+      updateUser({ ...user, favoriteActors: updatedFavorites.data });
+      setMessage('Actor añadido a favoritos');
+      setTimeout(() => setMessage(null), 3000);
     } catch (err) {
+      setMessage(err.message || 'Error al agregar el actor');
+      setTimeout(() => setMessage(null), 3000);
       console.error('Error al agregar actor a favoritos:', err);
     }
   };
 
   const removeFromFavorites = async (actorId) => {
+    if (!isAuthenticated) {
+      setMessage('Por favor, inicia sesión para quitar actores de favoritos');
+      setTimeout(() => setMessage(null), 3000);
+      return;
+    }
+
     try {
-      await removeFavoriteActor(actorId);
-      await refreshUserData(); // Actualizamos los datos del usuario
+      console.log('🔍 Enviando DELETE para actorId:', actorId, typeof actorId);
+      await authRequest(`/api/favorites/actors/${actorId}`, 'DELETE');
+      const updatedFavorites = await authRequest('/api/favorites/actors', 'GET');
+      updateUser({ ...user, favoriteActors: updatedFavorites.data });
+      setMessage('Actor eliminado de favoritos');
+      setTimeout(() => setMessage(null), 3000);
     } catch (err) {
+      setMessage(err.message || 'Error al quitar el actor');
+      setTimeout(() => setMessage(null), 3000);
       console.error('Error al quitar actor de favoritos:', err);
     }
   };
@@ -174,39 +204,6 @@ const ActorsPage = () => {
         </>
       ) : (
         <>
-          {/* Sección de actores favoritos */}
-          {isAuthenticated && (
-            <>
-              <h2>Actores Favoritos</h2>
-              {user?.favoriteActors?.length === 0 ? (
-                <p className="no-results">No tienes actores favoritos.</p>
-              ) : (
-                <div className="content-grid">
-                  {user?.favoriteActors?.map((actor) => (
-                    <div key={actor.id} className="content-card">
-                      <img
-                        src={
-                          actor.profile_path
-                            ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
-                            : 'https://via.placeholder.com/150'
-                        }
-                        alt={actor.name}
-                        className="content-image"
-                      />
-                      <h3>{actor.name}</h3>
-                      <button
-                        className="remove-button"
-                        onClick={() => removeFromFavorites(actor.id)}
-                      >
-                        Quitar de Favoritos
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </>
-          )}
-
           <h1>Actores Populares</h1>
           <div className="search-container">
             <input
@@ -218,52 +215,57 @@ const ActorsPage = () => {
             />
             {loading && searchTerm && <span className="search-spinner"></span>}
           </div>
+          {message && <div className="message">{message}</div>}
           {actors.length === 0 && searchTerm ? (
             <p className="no-results">No se encontraron actores para "{searchTerm}".</p>
           ) : (
             <div className="content-grid">
-              {actors.map((actor) => (
-                <div
-                  key={actor.id}
-                  className="content-card"
-                  onClick={() => handleActorClick(actor)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <img
-                    src={
-                      actor.profile_path
-                        ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
-                        : 'https://via.placeholder.com/150'
-                    }
-                    alt={actor.name}
-                    className="content-image"
-                  />
-                  <h3>{actor.name}</h3>
-                  {isAuthenticated && (
-                    user?.favoriteActors?.some((fav) => fav.id === actor.id) ? (
-                      <button
-                        className="remove-button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          removeFromFavorites(actor.id);
-                        }}
-                      >
-                        Quitar de Favoritos
-                      </button>
-                    ) : (
-                      <button
-                        className="add-button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          addToFavorites(actor);
-                        }}
-                      >
-                        Agregar a Favoritos
-                      </button>
-                    )
-                  )}
-                </div>
-              ))}
+              {actors.map((actor) => {
+                const isFavorited = user?.favoriteActors?.some((fav) => fav.id === actor.id);
+                console.log(`Actor ${actor.name} - isFavorited: ${isFavorited}`); // Depuración
+                return (
+                  <div
+                    key={actor.id}
+                    className={`content-card ${isFavorited ? 'favorited' : ''}`}
+                    onClick={() => handleActorClick(actor)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <img
+                      src={
+                        actor.profile_path
+                          ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
+                          : 'https://via.placeholder.com/150'
+                      }
+                      alt={actor.name}
+                      className="content-image"
+                    />
+                    <h3>{actor.name}</h3>
+                    {isAuthenticated && (
+                      isFavorited ? (
+                        <button
+                          className="remove-button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeFromFavorites(actor.id);
+                          }}
+                        >
+                          Quitar de Favoritos
+                        </button>
+                      ) : (
+                        <button
+                          className="add-button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            addToFavorites(actor);
+                          }}
+                        >
+                          Agregar a Favoritos
+                        </button>
+                      )
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </>

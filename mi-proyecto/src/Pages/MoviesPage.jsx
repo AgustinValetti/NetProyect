@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+// frontend/src/MoviesPage.jsx
+import React, { useState, useEffect, useRef } from 'react';
 import Modal from '../Components/Modal/Modal';
 import './ContentPage.css';
-import { useAuth } from '../Context/AuthContext';
+import { useAuth } from '../Context/AuthContext.jsx';
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const TMDB_API_URL = 'https://api.themoviedb.org/3';
@@ -29,7 +30,7 @@ const useDebounce = (callback, delay) => {
 };
 
 const MoviesPage = () => {
-  const { isAuthenticated, user, refreshUserData } = useAuth();
+  const { isAuthenticated, user, authRequest, updateUser } = useAuth();
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
@@ -143,6 +144,10 @@ const MoviesPage = () => {
   };
 
   const addToWatchLater = async (movie) => {
+    if (!isAuthenticated) {
+      alert('Por favor, inicia sesión para agregar películas a "Ver más tarde"');
+      return;
+    }
     try {
       const movieData = {
         id: movie.id,
@@ -150,19 +155,25 @@ const MoviesPage = () => {
         poster_path: movie.poster_path,
         release_date: movie.release_date,
       };
-      await addWatchLaterMovie(movieData);
-      await refreshUserData();
+      await authRequest('/api/watchlater', 'POST', movieData);
+      const updatedWatchLater = await authRequest('/api/watchlater', 'GET');
+      updateUser({ ...user, watchLaterMovies: updatedWatchLater.data });
     } catch (err) {
       console.error('Error al agregar película a "Ver más tarde":', err);
+      alert('No se pudo agregar la película');
     }
   };
 
   const removeFromWatchLater = async (movieId) => {
+    if (!isAuthenticated) return;
     try {
-      await removeWatchLaterMovie(movieId);
-      await refreshUserData();
+      console.log('🔍 Enviando DELETE para movieId:', movieId, typeof movieId);
+      await authRequest(`/api/watchlater/${movieId}`, 'DELETE');
+      const updatedWatchLater = await authRequest('/api/watchlater', 'GET');
+      updateUser({ ...user, watchLaterMovies: updatedWatchLater.data });
     } catch (err) {
       console.error('Error al quitar película de "Ver más tarde":', err);
+      alert('No se pudo quitar la película');
     }
   };
 
@@ -194,49 +205,53 @@ const MoviesPage = () => {
       ) : (
         <>
           <div className="content-grid">
-            {currentItems.map((movie) => (
-              <div
-                key={movie.id}
-                className="content-card"
-                onClick={() => handleMovieClick(movie)}
-                style={{ cursor: 'pointer' }}
-              >
-                <img
-                  src={
-                    movie.poster_path
-                      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                      : 'https://via.placeholder.com/150'
-                  }
-                  alt={movie.title}
-                  className="content-image"
-                />
-                <h3>{movie.title}</h3>
-                <p>{movie.release_date || 'Fecha no disponible'}</p>
-                {isAuthenticated && (
-                  user?.watchLaterMovies?.some((m) => m.id === movie.id) ? (
-                    <button
-                      className="remove-button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        removeFromWatchLater(movie.id);
-                      }}
-                    >
-                      Quitar de "Ver más tarde"
-                    </button>
-                  ) : (
-                    <button
-                      className="add-button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        addToWatchLater(movie);
-                      }}
-                    >
-                      Agregar a "Ver más tarde"
-                    </button>
-                  )
-                )}
-              </div>
-            ))}
+            {currentItems.map((movie) => {
+              const isInWatchLater = user?.watchLaterMovies?.some((m) => m.id === movie.id);
+              console.log(`Movie ${movie.title} - isInWatchLater: ${isInWatchLater}`); // Depuración
+              return (
+                <div
+                  key={movie.id}
+                  className={`content-card ${isInWatchLater ? 'later' : ''}`}
+                  onClick={() => handleMovieClick(movie)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img
+                    src={
+                      movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : 'https://via.placeholder.com/150'
+                    }
+                    alt={movie.title}
+                    className="content-image"
+                  />
+                  <h3>{movie.title}</h3>
+                  <p>{movie.release_date || 'Fecha no disponible'}</p>
+                  {isAuthenticated && (
+                    isInWatchLater ? (
+                      <button
+                        className="remove-button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeFromWatchLater(movie.id);
+                        }}
+                      >
+                        Quitar de "Ver más tarde"
+                      </button>
+                    ) : (
+                      <button
+                        className="add-button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToWatchLater(movie);
+                        }}
+                      >
+                        Agregar a "Ver más tarde"
+                      </button>
+                    )
+                  )}
+                </div>
+              );
+            })}
           </div>
           <div className="pagination">
             <button
@@ -259,7 +274,7 @@ const MoviesPage = () => {
       <Modal
         isOpen={modalOpen}
         onClose={closeModal}
-        selectedMovie={selectedMovie} // Pasar selectedMovie como prop
+        selectedMovie={selectedMovie}
         trailerUrl={trailerUrl}
       />
     </div>

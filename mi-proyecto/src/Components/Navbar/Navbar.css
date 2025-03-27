@@ -1,245 +1,311 @@
 /* src/Components/Navbar/Navbar.css */
 .navbar {
-    display: flex;
-    align-items: center;
-    color: #BB2D3B;
-    padding: 1rem 5rem; /* Aumentamos el padding lateral de 3rem a 5rem */
-    background-color: #291919; /* Fondo oscuro para que coincida con el tema */
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(87, 83, 83, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #1a0504 0%, #3b0a0e 100%);
+  padding: 1rem 2rem;
+  color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1000;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navbar-brand a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #f87171;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand a:hover {
+  color: #bd0811;
+}
+
+.navbar-center {
+  position: relative;
+  transition: all 0.3s ease; /* Animación suave para el menú */
+}
+
+.dropdown-toggle {
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+  color: #f87171;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: linear-gradient(135deg, #1a0504 0%, #3b0a0e 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  padding: 0.5rem 0;
+  min-width: 150px;
+  z-index: 1000;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: white;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(187, 45, 59, 0.2);
+  color: #f87171;
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease; /* Animación suave para el menú */
+}
+
+.welcome-message {
+  font-size: 1rem;
+  color: #d1d5db;
+  transition: font-size 0.3s ease;
+}
+
+.navbar-item {
+  color: #f87171;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease, font-size 0.3s ease;
+}
+
+.navbar-item:hover {
+  color: #bd0811;
+}
+
+.logout-button {
+  background: #BB2D3B;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.3s ease, padding 0.3s ease, font-size 0.3s ease;
+}
+
+.logout-button:hover {
+  background: #bd0811;
+  transform: translateY(-2px);
+}
+
+/* Botón hamburguesa (oculto en escritorio) */
+.navbar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease, font-size 0.3s ease;
+}
+
+/* Media Query para tablets y móviles (768px y menos) */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem; /* Reducimos el padding */
   }
-  
-  /* Contenedor para navbar-brand y navbar-center */
+
   .navbar-left {
-    display: flex;
-    align-items: center;
-    font-size: 2px;
-    font-weight: 600;
-    gap: 1rem; /* Espacio entre el brand y el menú desplegable */
+    width: 100%;
+    justify-content: space-between;
   }
-  
-  .navbar-brand a {
-    color: #BB2D3B;
-    font-size: 1.5rem;
-    text-decoration: none;
-    font-weight: bold;
+
+  .navbar-toggle {
+    display: block;
+    color: white; /* Aseguramos que el botón hamburguesa sea blanco */
   }
-  
-  .navbar-brand a:hover {
-    color: white;
-    transition: 0.3s;
-  }
-  
+
   .navbar-center {
-    display: flex;
-  }
-  
-  /* Estilos para el menú desplegable */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .dropdown-toggle {
-    color: #BB2D3B;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    transition: color 0.3s ease;
-  }
-  
-  .dropdown-toggle:hover {
-    color: white;
-  }
-  
-  .dropdown-menu {
     display: none;
+    width: 100%;
+    padding: 1rem 0;
+    background: linear-gradient(135deg, #1a0504 0%, #3b0a0e 100%);
     position: absolute;
-    background-color: #221413;
-    min-width: 160px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.075);
-    z-index: 1;
-    border-radius: 8px;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-10px); /* Para la animación de deslizamiento */
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
   }
-  
-  .dropdown:hover .dropdown-menu {
+
+  .navbar-center.active {
     display: block;
+    transform: translateY(0);
+    opacity: 1;
   }
-  
-  .dropdown-item {
-    display: block;
-    text-align: center;
-    padding: 0.75rem 1rem;
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease, background-color 0.3s ease;
-  }
-  
-  .dropdown-item:hover {
-    color: white;
-    background-color: #BB2D3B;
-    transition: 0.5s ease;
-    transform: scale(1.03);
-  }
-  
-  .navbar-menu {
+
+  .dropdown {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    margin-left: auto; /* Alinea el menú a la derecha */
   }
-  
-  .navbar-item {
-    color: #BB2D3B;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
+
+  .dropdown-toggle {
+    font-size: 1.2rem;
+    padding: 0.5rem 0;
   }
-  
-  .navbar-item:hover {
-    color: white;
-    text-decoration: none;
+
+  .dropdown-menu {
+    position: static;
+    display: block;
+    background: none;
+    box-shadow: none;
+    padding: 0.5rem 0;
+    text-align: center;
   }
-  
+
+  .dropdown-item {
+    font-size: 1.1rem;
+    padding: 0.75rem 0; /* Más espacio para facilitar el toque */
+  }
+
+  .navbar-menu {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    background: linear-gradient(135deg, #1a0504 0%, #3b0a0e 100%);
+    transform: translateY(-10px); /* Para la animación de deslizamiento */
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .navbar-menu.active {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+  }
+
   .welcome-message {
-    margin-right: 1rem;
-    font-weight: 500;
-    color: #d1d5db; /* Color más claro para el mensaje de bienvenida */
+    font-size: 1.1rem;
   }
-  
+
+  .navbar-item {
+    font-size: 1.1rem;
+    padding: 0.5rem 0; /* Más espacio para facilitar el toque */
+  }
+
   .logout-button {
-    background-color: #BB2D3B;
-    color: white;
-    border: none;
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+    width: 100%; /* Ocupa todo el ancho para mejor accesibilidad */
+    max-width: 200px; /* Limita el ancho máximo */
+  }
+}
+
+/* Media Query para móviles pequeños (480px y menos) */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.5rem 0.75rem; /* Aún más compacto */
+  }
+
+  .navbar-brand a {
+    font-size: 1.3rem;
+  }
+
+  .navbar-toggle {
+    font-size: 1.3rem;
+    color: white; /* Aseguramos que el botón hamburguesa sea blanco */
+  }
+
+  .dropdown-toggle {
+    font-size: 1.1rem;
+  }
+
+  .dropdown-item {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+  }
+
+  .navbar-menu {
+    gap: 0.75rem; /* Reducimos el espacio entre elementos */
+  }
+
+  .welcome-message {
+    font-size: 0.95rem;
+  }
+
+  .navbar-item {
+    font-size: 0.95rem;
+    padding: 0.4rem 0;
+  }
+
+  .logout-button {
+    font-size: 0.95rem;
     padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    max-width: 180px; /* Ajustamos el ancho máximo */
   }
-  
-  .logout-button:hover {
-    background-color: #bd0811;
+}
+
+/* Media Query para pantallas muy pequeñas (360px y menos) */
+@media (max-width: 360px) {
+  .navbar {
+    padding: 0.5rem;
   }
-  
-  /* Media Query para tablets (768px y menos) */
-  @media (max-width: 768px) {
-    .navbar {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 1rem 2rem; /* Reducimos el padding lateral a 2rem */
-    }
-  
-    .navbar-left {
-      width: 100%;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-  
-    .navbar-center {
-      width: auto;
-    }
-  
-    .dropdown-toggle {
-      font-size: 0.9rem;
-    }
-  
-    .dropdown-menu {
-      min-width: 140px;
-      left: 0;
-      transform: none;
-    }
-  
-    .dropdown-item {
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-    }
-  
-    .navbar-menu {
-      width: 100%;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      margin-top: 1rem;
-      margin-left: 0;
-    }
-  
-    .navbar-brand a {
-      font-size: 1.3rem;
-    }
-  
-    .welcome-message {
-      margin-right: 0;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-  
-    .navbar-item {
-      font-size: 0.9rem;
-    }
-  
-    .logout-button {
-      width: 100%;
-      padding: 0.75rem;
-      font-size: 0.9rem;
-    }
+
+  .navbar-brand a {
+    font-size: 1.2rem;
   }
-  
-  /* Media Query para móviles (480px y menos) */
-  @media (max-width: 480px) {
-    .navbar {
-      padding: 0.75rem 1rem; /* Reducimos aún más el padding lateral a 1rem */
-    }
-  
-    .navbar-left {
-      gap: 0.3rem;
-    }
-  
-    .navbar-brand a {
-      font-size: 0.8rem;
-    }
-  
-    .navbar-center {
-      margin: 0;
-    }
-  
-    .dropdown-toggle {
-      font-size: 0.8rem;
-      padding: 0.5rem;
-    }
-  
-    .dropdown-menu {
-      min-width: 120px;
-    }
-  
-    .dropdown-item {
-      font-size: 0.8rem;
-      padding: 0.5rem;
-    }
-  
-    .navbar-menu {
-      gap: 0.75rem;
-    }
-  
-    .navbar-item {
-      position: relative;
-      bottom: 4px;
-      font-size: 0.6rem;
-    }
-  
-    .welcome-message {
-      font-size: 0.8rem;
-    }
-  
-    .logout-button {
-      padding: 0.5rem;
-      font-size: 0.8rem;
-    }
+
+  .navbar-toggle {
+    font-size: 1.2rem;
+    color: white;
   }
+
+  .dropdown-toggle {
+    font-size: 1rem;
+  }
+
+  .dropdown-item {
+    font-size: 0.9rem;
+    padding: 0.4rem 0;
+  }
+
+  .welcome-message {
+    font-size: 0.9rem;
+  }
+
+  .navbar-item {
+    font-size: 0.9rem;
+    padding: 0.3rem 0;
+  }
+
+  .logout-button {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    max-width: 160px;
+  }
+}

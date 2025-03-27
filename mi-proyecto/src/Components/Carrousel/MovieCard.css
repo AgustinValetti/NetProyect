@@ -1,114 +1,183 @@
+/* Estilos para las tarjetas de películas/series */
 .movie-card {
-    flex: 0 0 auto;
-    position: relative;
-    transition: transform 0.3s ease;
-    border-radius: 8px;
-    overflow: hidden;
-    width: calc((100% / 5) - 13px); /* Para 5 películas con espaciado */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.103);
-  }
-  
-  .movie-card:hover {
-    transform: scale(1.02);
-    z-index: 5;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-  }
-  
-  .movie-poster {
-    width: 100%;
-    aspect-ratio: 2/3; /* Mantiene relación de aspecto de poster de película */
-    object-fit: cover;
-    display: block;
-    border-radius: 8px;
-  }
-  
-  .movie-title {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
-    color: rgb(255, 255, 255);
-    padding: 16px 8px 8px;
-    text-align: center;
-    font-size: 18px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  /* Estilo para el badge de ranking */
-  .ranking-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: rgba(29, 28, 28, 0.788); /* Rojo de Netflix */
-    color: #BB2D3B;
-    font-size: 20px;
-    font-weight: bold;
-    width: 36px;
-    height: 36px;
-    border-radius: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-  }
-  
+  flex: 0 0 auto;
+  position: relative;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
+  width: calc((100% / 5) - 13px); /* 5 tarjetas por fila en pantallas grandes */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: #1a0504; /* Fondo oscuro para mantener la estética */
+  border: 2px solid transparent; /* Borde inicial transparente */
+}
 
-  
-  /* Estilos responsivos para las tarjetas */
-  @media (max-width: 1400px) {
-    .movie-card {
-      width: calc((100% / 5) - 13px); /* 5 películas */
-    }
+/* Efecto de brillo al pasar el mouse */
+.movie-card:hover {
+  border: 2px solid #f87171; /* Borde rojizo al hacer hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Pseudo-elemento para el efecto de brillo */
+.movie-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(248, 113, 113, 0.2), /* Color rojizo con opacidad */
+    transparent
+  );
+  transition: left 0.5s ease;
+  pointer-events: none; /* Para que no interfiera con los clics */
+}
+
+.movie-card:hover::after {
+  left: 100%; /* El brillo se mueve de izquierda a derecha */
+}
+
+.movie-poster {
+  width: 100%;
+  aspect-ratio: 2/3; /* Relación de aspecto para pósters */
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+
+.movie-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9)); /* Degradado consistente con el navbar */
+  color: white;
+  padding: 16px 8px 8px;
+  text-align: center;
+  font-size: 18px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: font-size 0.3s ease, padding 0.3s ease;
+}
+
+/* Estilo para el badge de ranking */
+.ranking-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(29, 28, 28, 0.9); /* Fondo oscuro con opacidad */
+  color: #f87171; /* Color rojizo para el texto */
+  font-size: 20px;
+  font-weight: bold;
+  width: 36px;
+  height: 36px;
+  border-radius: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.ranking-badge:hover {
+  background-color: #BB2D3B; /* Fondo rojizo al hacer hover */
+  color: white;
+}
+
+/* Estilos responsivos para las tarjetas */
+@media (max-width: 1400px) {
+  .movie-card {
+    width: calc((100% / 5) - 13px); /* 5 tarjetas */
   }
-  
-  @media (max-width: 1200px) {
-    .movie-card {
-      width: calc((100% / 4) - 12px); /* 4 películas */
-    }
-    .movie-title {
-      font-size: 14px;
-    }
-    .ranking-badge {
-      width: 32px;
-      height: 32px;
-      font-size: 18px;
-    }
+
+  .movie-title {
+    font-size: 16px;
+    padding: 14px 8px 8px;
   }
-  
-  @media (max-width: 768px) {
-    .movie-card {
-      width: calc((100% / 3) - 10px); /* 3 películas */
-    }
-    .movie-title {
-      font-size: 12px;
-      padding: 12px 6px 6px;
-    }
-    .ranking-badge {
-      width: 28px;
-      height: 28px;
-      font-size: 16px;
-    }
+
+  .ranking-badge {
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
   }
-  
-  @media (max-width: 480px) {
-    .movie-card {
-      width: calc((100% / 2) - 8px); /* 2 películas */
-    }
-    .ranking-badge {
-      width: 24px;
-      height: 24px;
-      font-size: 14px;
-    }
+}
+
+@media (max-width: 1200px) {
+  .movie-card {
+    width: calc((100% / 4) - 12px); /* 4 tarjetas */
   }
-  
-  @media (max-width: 320px) {
-    .movie-card {
-      width: 100%; /* 1 película */
-    }
+
+  .movie-title {
+    font-size: 14px;
+    padding: 12px 6px 6px;
   }
+
+  .ranking-badge {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-card {
+    width: calc((100% / 3) - 10px); /* 3 tarjetas */
+  }
+
+  .movie-title {
+    font-size: 12px;
+    padding: 10px 6px 6px;
+  }
+
+  .ranking-badge {
+    top: 8px;
+    left: 8px;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-card {
+    width: calc((100% / 2) - 8px); /* 2 tarjetas */
+  }
+
+  .movie-title {
+    font-size: 11px;
+    padding: 8px 4px 4px;
+  }
+
+  .ranking-badge {
+    top: 6px;
+    left: 6px;
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .movie-card {
+    width: 100%; /* 1 tarjeta */
+  }
+
+  .movie-title {
+    font-size: 12px;
+    padding: 10px 6px 6px;
+  }
+
+  .ranking-badge {
+    top: 5px;
+    left: 5px;
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+  }
+}

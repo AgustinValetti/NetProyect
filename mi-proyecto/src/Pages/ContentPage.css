@@ -9,7 +9,7 @@
   font-size: 2rem;
   margin-bottom: 2rem;
   text-align: center;
-  margin-top: 2%;
+  
   margin-bottom: 4%;
 }
 
@@ -166,23 +166,78 @@
 }
 
 .remove-button {
-  background: #f87171;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
+  background: rgba(255, 156, 156, 0.2);
+  color: #f87171;
+  padding: 0.8rem;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
 }
 
-.remove-button:hover {
-  background: #ef4444;
+.remove-button:hover { 
+  background: rgba(239, 68, 68, 0.3);
+  transform: translateY(-2px);
+  border: 1px solid #BB2D3B;
 }
+
+/* Nueva clase para elementos añadidos a favoritos o "ver más tarde" */
+.favorited {
+  border: 2px solid #f87171; /* Borde rojizo claro para combinar con tu paleta */
+  background: radial-gradient(150deg, #3b0a0e 0%, #1a0504 100%); /* Fondo más claro */
+  box-shadow: 0 2px 10px rgba(187, 45, 59, 0.3); /* Sombra rojiza */
+  position: relative;
+}
+
+.favorited::after {
+  content: '★'; /* Estrella para indicar que está en favoritos */
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #f87171; /* Color rojizo claro */
+  font-size: 2rem;
+  margin-right: .5rem;
+  background-color: rgba(90, 78, 78, 0.493);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 60%;
+  margin: 4%;
+}
+/*Later*/
+
+.later {
+  border: 2px solid #f87171; /* Borde rojizo claro para combinar con tu paleta */
+  background: radial-gradient(150deg, #3b0a0e 0%, #1a0504 100%); /* Fondo más claro */
+  box-shadow: 0 2px 10px rgba(187, 45, 59, 0.3); /* Sombra rojiza */
+  position: relative;
+}
+
+.later::after {
+  
+  content: '📌 '; /* Estrella para indicar que está en favoritos */
+  
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #f87171; /* Color rojizo claro */
+  font-size: 1.5rem;
+  margin-right: .3rem;
+  background-color: rgba(90, 78, 78, 0.493);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 60%;
+  margin: 4%;
+}
+
 
 @keyframes spin {
   0% {
@@ -245,7 +300,7 @@
 }
 
 .modal-content {
-  background: linear-gradient(135deg, #1a0504 0%, #3b0a0e 100%); /* Nuevo fondo */
+  background: linear-gradient(135deg, #1a0504 0%, #3b0a0e 100%);
   border-radius: 15px;
   padding: 2rem;
   width: 90%;
@@ -301,10 +356,10 @@
   right: 1rem;
   background: #533f41;
   color: wheat;
-  border: 2px solid rgba(255, 255, 255, 0.3); /* Borde blanco sutil */
+  border: 2px solid rgba(255, 255, 255, 0.3);
   width: 30px;
   height: 30px;
-  border-radius: 50%; /* Forma circular */
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -316,7 +371,7 @@
 }
 
 .modal-close-button:hover {
-  transform: scale(1.1); /* Escala en lugar de translate */
+  transform: scale(1.1);
   background: #1f1718;
   box-shadow: 0 5px 15px rgba(187, 45, 59, 0.4);
 }

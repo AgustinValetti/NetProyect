@@ -319,6 +319,10 @@ router.delete('/delete-account', auth, async (req, res) => {
     console.error('🔥 Error al eliminar cuenta:', err.stack);
     res.status(500).json({ message: 'Error al eliminar la cuenta', error: err.message });
   }
+
+
+  
+
 });
 
 export { router as default };

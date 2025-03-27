@@ -18,6 +18,9 @@ import MoviesPage from "./Pages/MoviesPage.jsx";
 import SeriesPage from "./Pages/SeriesPage.jsx";
 import ActorsPage from "./Pages/ActorsPage.jsx";
 import ActorProfile from "./Pages/ActorProfile.jsx";
+import WatchLaterPage from './Pages/WatchLaterPage'; // Nueva página
+import FavoriteActorsPage from './Pages/FavoriteActorsPage'; // Nueva página
+
 
 import "./index.css";
 import "./Components/Buscador/Buscador.css";
@@ -50,6 +53,8 @@ function App() {
             <Route path="/movies" element={<MoviesPage />} />
             <Route path="/series" element={<SeriesPage />} />
             <Route path="/actors" element={<ActorsPage />} />
+            <Route path="/watch-later" element={<WatchLaterPage />} />
+            <Route path="/favorite-actors" element={<FavoriteActorsPage />} />  
             <Route path="/actor/:actorId" element={<ActorProfile />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/profile" element={<Profile />} />

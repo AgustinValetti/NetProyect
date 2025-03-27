@@ -1,3 +1,4 @@
+// frontend/src/Pages/SeriesPage.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import Modal from '../Components/Modal/Modal';
 import './ContentPage.css';
@@ -29,7 +30,7 @@ const useDebounce = (callback, delay) => {
 };
 
 const SeriesPage = () => {
-  const { isAuthenticated, user, refreshUserData } = useAuth();
+  const { isAuthenticated, user, authRequest, updateUser } = useAuth();
   const [series, setSeries] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
@@ -144,7 +145,13 @@ const SeriesPage = () => {
   };
 
   const addToWatchLater = async (series) => {
-    if (user?.watchLaterSeries?.some((s) => s.id === series.id)) {
+    if (!isAuthenticated) {
+      setMessage('Por favor, inicia sesión para agregar series a "Ver más tarde"');
+      setTimeout(() => setMessage(null), 3000);
+      return;
+    }
+
+    if (user?.watchLaterMovies?.some((s) => s.id === series.id)) {
       setMessage('Esta serie ya está en tu lista de "Ver más tarde"');
       setTimeout(() => setMessage(null), 3000);
       return;
@@ -153,12 +160,13 @@ const SeriesPage = () => {
     try {
       const seriesData = {
         id: series.id,
-        name: series.name,
+        title: series.name, // Renombramos "name" a "title" para que coincida con el esquema
         poster_path: series.poster_path,
-        first_air_date: series.first_air_date,
+        release_date: series.first_air_date, // Renombramos "first_air_date" a "release_date"
       };
-      await addWatchLaterSeries(seriesData);
-      await refreshUserData();
+      await authRequest('/api/watchlater', 'POST', seriesData);
+      const updatedWatchLater = await authRequest('/api/watchlater', 'GET');
+      updateUser({ ...user, watchLaterMovies: updatedWatchLater.data });
       setMessage('Serie añadida a "Ver más tarde"');
       setTimeout(() => setMessage(null), 3000);
     } catch (err) {
@@ -169,9 +177,17 @@ const SeriesPage = () => {
   };
 
   const removeFromWatchLater = async (seriesId) => {
+    if (!isAuthenticated) {
+      setMessage('Por favor, inicia sesión para quitar series de "Ver más tarde"');
+      setTimeout(() => setMessage(null), 3000);
+      return;
+    }
+
     try {
-      await removeWatchLaterSeries(seriesId);
-      await refreshUserData();
+      console.log('🔍 Enviando DELETE para seriesId:', seriesId, typeof seriesId);
+      await authRequest(`/api/watchlater/${seriesId}`, 'DELETE');
+      const updatedWatchLater = await authRequest('/api/watchlater', 'GET');
+      updateUser({ ...user, watchLaterMovies: updatedWatchLater.data });
       setMessage('Serie eliminada de "Ver más tarde"');
       setTimeout(() => setMessage(null), 3000);
     } catch (err) {
@@ -210,49 +226,53 @@ const SeriesPage = () => {
       ) : (
         <>
           <div className="content-grid">
-            {currentItems.map((show) => (
-              <div
-                key={show.id}
-                className="content-card"
-                onClick={() => handleSeriesClick(show)}
-                style={{ cursor: 'pointer' }}
-              >
-                <img
-                  src={
-                    show.poster_path
-                      ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
-                      : 'https://via.placeholder.com/150'
-                  }
-                  alt={show.name}
-                  className="content-image"
-                />
-                <h3>{show.name}</h3>
-                <p>{show.first_air_date || 'Fecha no disponible'}</p>
-                {isAuthenticated && (
-                  user?.watchLaterSeries?.some((s) => s.id === show.id) ? (
-                    <button
-                      className="remove-button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        removeFromWatchLater(show.id);
-                      }}
-                    >
-                      Quitar de "Ver más tarde"
-                    </button>
-                  ) : (
-                    <button
-                      className="add-button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        addToWatchLater(show);
-                      }}
-                    >
-                      Agregar a "Ver más tarde"
-                    </button>
-                  )
-                )}
-              </div>
-            ))}
+            {currentItems.map((show) => {
+              const isInWatchLater = user?.watchLaterMovies?.some((s) => s.id === show.id);
+              console.log(`Series ${show.name} - isInWatchLater: ${isInWatchLater}`); // Depuración
+              return (
+                <div
+                  key={show.id}
+                  className={`content-card ${isInWatchLater ? 'later' : ''}`}
+                  onClick={() => handleSeriesClick(show)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img
+                    src={
+                      show.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
+                        : 'https://via.placeholder.com/150'
+                    }
+                    alt={show.name}
+                    className="content-image"
+                  />
+                  <h3>{show.name}</h3>
+                  <p>{show.first_air_date || 'Fecha no disponible'}</p>
+                  {isAuthenticated && (
+                    isInWatchLater ? (
+                      <button
+                        className="remove-button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeFromWatchLater(show.id);
+                        }}
+                      >
+                        Quitar de "Ver más tarde"
+                      </button>
+                    ) : (
+                      <button
+                        className="add-button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToWatchLater(show);
+                        }}
+                      >
+                        Agregar a "Ver más tarde"
+                      </button>
+                    )
+                  )}
+                </div>
+              );
+            })}
           </div>
           <div className="pagination">
             <button

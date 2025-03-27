@@ -1,13 +1,17 @@
+// backend/server.js
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import fileUpload from 'express-fileupload';
 import authRoutes from './src/routes/auth.js';
 import reviewRoutes from './src/routes/reviews.js';
-import axios from 'axios'; // Importar axios
+import watchLaterRoutes from './src/routes/watchLater.js'; // Nueva importación
+import axios from 'axios';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+// backend/server.js
+import favoritesActorsRoutes from './src/routes/favoriteActors.js';
 
 // Solucionar __dirname en ES6 modules
 const __filename = fileURLToPath(import.meta.url);
@@ -65,6 +69,8 @@ mongoose
 // Rutas de la API
 app.use('/api/auth', authRoutes);
 app.use('/reviews', reviewRoutes);
+app.use('/api/watchlater', watchLaterRoutes); // Nueva ruta
+app.use('/api/favorites/actors', favoritesActorsRoutes);
 
 // Endpoint para obtener el reparto
 app.get('/api/tmdb/credits/:mediaType/:id', async (req, res) => {
