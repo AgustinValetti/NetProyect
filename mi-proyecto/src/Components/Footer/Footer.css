@@ -1,71 +1,199 @@
 /* src/Components/Footer/Footer.css */
 .footer {
-    
-    color: #fff;
-    padding: 40px 20px;
-    font-family: Arial, sans-serif;
-    margin-top: 2%;
-  }
-  
+  color: #d1d5db; /* Gris claro del navbar para el texto */
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  margin-top: 2%;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  margin: 20px;
+  min-width: 200px; /* Para evitar que colapse demasiado en pantallas pequeñas */
+}
+
+.footer-section h4 {
+  font-size: 18px;
+  color: #f87171; /* Rojo vibrante del navbar */
+  margin-bottom: 15px;
+  text-shadow: 0 1px 3px rgba(187, 45, 59, 0.2); /* Sombra sutil */
+  transition: color 0.3s ease;
+}
+
+.footer-section h4:hover {
+  color: #bd0811; /* Rojo intenso al hover */
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  color: #d1d5db;
+  text-decoration: none;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #f87171;
+  border-bottom: 2px solid; /* Borde moderno al hover */
+  border-image: linear-gradient(90deg, 
+    rgba(248, 113, 113, 0) 0%, 
+    rgba(189, 8, 17, 0.8) 50%, 
+    rgba(248, 113, 113, 0) 100%
+  ) 1;
+}
+
+.footer-section p {
+  margin: 5px 0;
+  color: #d1d5db;
+}
+
+.social-links a {
+  color: #d1d5db;
+  text-decoration: none;
+  margin-right: 15px;
+  font-size: 1.2rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #bd0811;
+  transform: scale(1.2); /* Efecto de aumento sutil */
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid; /* Borde con gradiente inspirado en el navbar */
+  border-image: linear-gradient(90deg, 
+    rgba(248, 113, 113, 0.2) 0%, 
+    rgba(189, 8, 17, 0.8) 50%, 
+    rgba(248, 113, 113, 0.2) 100%
+  ) 1;
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 14px;
+  color: #d1d5db;
+}
+
+/* Media Queries para diseño responsive */
+@media (max-width: 1024px) {
   .footer-content {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
+    justify-content: space-between;
+    padding: 0 10px;
   }
-  
+
   .footer-section {
-    margin: 20px;
+    margin: 15px;
+    flex: 1 1 45%; /* 2 columnas en tablets */
   }
-  
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 15px;
+  }
+
+  .footer-section {
+    flex: 1 1 40%;
+    min-width: 180px;
+  }
+
   .footer-section h4 {
-    font-size: 18px;
-    margin-bottom: 15px;
+    font-size: 16px;
   }
-  
-  .footer-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  
+
   .footer-section ul li {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
-  
+
   .footer-section ul li a {
-    
-    color: #fff;
-    text-decoration: none;
+    font-size: 0.95rem;
   }
-  
-  .footer-section ul li a:hover {
-    text-decoration: underline;
-  }
-  
-  .footer-section p {
-    margin: 5px 0;
-  }
-  
+
   .social-links a {
-    color: #fff;
-    text-decoration: none;
-    margin-right: 10px;
+    font-size: 1.1rem;
+    margin-right: 12px;
   }
-  
-  .social-links a:hover {
-    text-decoration: none;
-    color: #bb2d3b;
-  }
-  
-  .footer-bottom {
-    text-align: center;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #444;
-  }
-  
+
   .footer-bottom p {
-    margin: 0;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 20px 10px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-section {
+    flex: 1 1 100%; /* 1 columna en móviles pequeños */
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  .footer-section h4 {
+    font-size: 15px;
+  }
+
+  .footer-section ul li {
+    margin-bottom: 6px;
+  }
+
+  .footer-section ul li a {
+    font-size: 0.9rem;
+  }
+
+  .social-links a {
+    font-size: 1rem;
+    margin: 0 10px; /* Espaciado horizontal */
+  }
+
+  .footer-bottom {
+    margin-top: 15px;
+    padding-top: 15px;
+  }
+
+  .footer-bottom p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .footer {
+    padding: 15px 5px;
+  }
+
+  .footer-section h4 {
     font-size: 14px;
   }
+
+  .footer-section ul li a {
+    font-size: 0.85rem;
+  }
+
+  .social-links a {
+    margin: 0 8px;
+  }
+}
