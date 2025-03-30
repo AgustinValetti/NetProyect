@@ -2,17 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Modal.css';
 
-const Modal = ({ isOpen, onClose, selectedMovie, trailerUrl }) => {
+const Modal = ({ isOpen, onClose, selectedMovie, trailerUrl, watchProviders }) => {
   const [cast, setCast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Obtener la API Key desde la variable de entorno
   const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
   useEffect(() => {
     const fetchCast = async () => {
-      // Verificar si selectedMovie y su ID existen
       if (!selectedMovie || !selectedMovie.id) {
         console.log('No se encontró un ID de película/serie:', selectedMovie);
         setError('No se encontró un ID válido para la película o serie.');
@@ -113,6 +111,31 @@ const Modal = ({ isOpen, onClose, selectedMovie, trailerUrl }) => {
               </div>
             ) : (
               <p>No se encontró información del reparto.</p>
+            )}
+          </div>
+          <div className="modal-providers">
+            <h3>Disponible en:</h3>
+            {watchProviders.length > 0 ? (
+              <div className="providers-list">
+                {watchProviders.map((provider) => (
+                  <a
+                    key={provider.provider_id}
+                    href={provider.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="provider-item"
+                  >
+                    <img
+                      src={provider.logo_path}
+                      alt={provider.provider_name}
+                      title={provider.provider_name}
+                      className="provider-logo"
+                    />
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <p>No hay plataformas de streaming disponibles para esta región.</p>
             )}
           </div>
         </div>

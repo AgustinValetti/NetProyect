@@ -1,4 +1,4 @@
-/* Modal.css */
+/* Modal.css - Versión Extra Ancha */
 
 /* Estilo del fondo del modal */
 .modal-overlay {
@@ -7,7 +7,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8); /* Fondo oscuro semi-transparente */
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,58 +15,74 @@
   padding: 20px;
 }
 
-/* Contenedor del contenido del modal */
+/* Contenedor del contenido del modal - MUCHO MÁS ANCHO */
 .modal-content {
-  background: #1a1a1a; /* Fondo oscuro para el modal */
+  background: #1a1a1a;
   border-radius: 12px;
-  padding: 25px;
-  max-width: 800px;
-  width: 100%;
-  max-height: 90vh;
+  padding: 30px;
+  max-width: 1200px; /* Aumentado significativamente (antes 800px) */
+  width: 95%; /* Ocupa casi todo el ancho disponible */
+  max-height: 95vh;
+  height: auto;
+  min-height: 60vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-  color: #fff; /* Texto blanco para contraste */
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Botón de cerrar */
 .modal-close-button {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 25px;
+  right: 25px;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 30px;
   color: #fff;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.3s ease;
+  z-index: 10;
 }
 
 .modal-close-button:hover {
-  color: #BB2D3B; /* Color rojo oscuro al pasar el mouse, alineado con la estética */
+  color: #BB2D3B;
+  transform: rotate(90deg);
 }
 
 /* Título del modal */
 .modal-content h2 {
-  margin: 0 0 20px;
-  font-size: 28px;
+  margin: 0 0 25px;
+  font-size: 34px;
   font-weight: 600;
   color: #fff;
+  transition: color 0.3s ease;
+  padding-right: 40px;
+}
+
+.modal-content h2:hover {
+  color: #BB2D3B;
 }
 
 /* Cuerpo del modal */
 .modal-body {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
+  flex-grow: 1;
 }
 
-/* Tráiler */
+/* Tráiler - Ahora mucho más ancho */
 .modal-trailer {
   position: relative;
-  padding-bottom: 56.25%; /* Proporción 16:9 para el iframe */
+  width: 100%;
   height: 0;
+  padding-bottom: 40%; /* Proporción más horizontal (cerca de 2.5:1) */
   overflow: hidden;
+  border-radius: 10px;
+  background: #000;
 }
 
 .modal-trailer iframe {
@@ -77,56 +93,69 @@
   height: 100%;
   border: none;
   border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.modal-trailer:hover iframe {
+  transform: scale(1.02);
 }
 
 /* Descripción */
 .modal-description h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 24px;
+  margin-bottom: 15px;
   color: #fff;
+  transition: color 0.3s ease;
+}
+
+.modal-description h3:hover {
+  color: #BB2D3B;
 }
 
 .modal-description p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #d3d3d3; /* Texto gris claro para la descripción */
+  font-size: 18px;
+  line-height: 1.8;
+  color: #d3d3d3;
 }
 
 /* Sección de reparto */
 .modal-cast {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .modal-cast h3 {
-  font-size: 20px;
-  margin-bottom: 15px;
+  font-size: 24px;
+  margin-bottom: 20px;
   color: #fff;
+  transition: color 0.3s ease;
+}
+
+.modal-cast h3:hover {
+  color: #BB2D3B;
 }
 
 .modal-cast p {
-  font-size: 16px;
+  font-size: 18px;
   color: #d3d3d3;
 }
 
 /* Lista de actores */
 .cast-list {
   display: flex;
-  flex-direction: column; /* Mostrar actores uno debajo del otro */
+  flex-direction: column;
 }
 
-/* Estilo de los enlaces de los actores */
 .cast-link {
-  display: block; /* Hacer que el enlace ocupe todo el ancho */
-  padding: 10px 0; /* Espaciado vertical */
-  color: #fff; /* Texto blanco */
+  display: block;
+  padding: 15px 0;
+  color: #fff;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   transition: color 0.3s ease, transform 0.2s ease;
-  position: relative; /* Para posicionar la línea divisoria */
+  position: relative;
 }
 
-/* Línea divisoria entre actores */
 .cast-link:not(:last-child)::after {
   content: '';
   position: absolute;
@@ -134,11 +163,220 @@
   left: 0;
   width: 100%;
   height: 1px;
-  background: #BB2D3B; /* Línea de color rojo oscuro */
+  background: #BB2D3B;
+  opacity: 0.5;
 }
 
-/* Efecto hover para los actores */
 .cast-link:hover {
-  color: #BB2D3B; /* Color rojo oscuro al pasar el mouse */
-  transform: translateX(5px); /* Pequeña animación de desplazamiento */
+  color: #BB2D3B;
+  transform: translateX(10px);
+}
+
+/* Sección de proveedores */
+.modal-providers {
+  margin-top: 30px;
+}
+
+.modal-providers h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.modal-providers h3:hover {
+  color: #BB2D3B;
+}
+
+.modal-providers p {
+  font-size: 18px;
+  color: #d3d3d3;
+}
+
+.providers-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  
+  border-radius: 12px;
+  
+}
+
+.provider-item {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 3px solid #BB2D3B;
+  border-radius: 12px;
+  padding: 0px;
+  
+}
+
+.provider-item:hover {
+  transform: scale(1.2);
+  border-color: #BB2D3B;
+  box-shadow: 0 5px 25px rgba(187, 45, 59, 0.5);
+}
+
+.provider-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  background: transparent;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+  .modal-content {
+    max-width: 1100px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .modal-content {
+    max-width: 1000px;
+  }
+}
+
+@media (max-width: 992px) {
+  .modal-content {
+    max-width: 900px;
+  }
+  
+  .modal-trailer {
+    padding-bottom: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    max-width: 95%;
+    padding: 25px;
+  }
+
+  .modal-content h2 {
+    font-size: 28px;
+  }
+
+  .modal-trailer {
+    padding-bottom: 50%;
+  }
+
+  .modal-description h3,
+  .modal-cast h3,
+  .modal-providers h3 {
+    font-size: 22px;
+  }
+
+  .modal-description p,
+  .modal-cast p,
+  .modal-providers p {
+    font-size: 17px;
+  }
+
+  .cast-link {
+    font-size: 17px;
+    padding: 12px 0;
+  }
+
+  .provider-logo {
+    width: 45px;
+    height: 45px;
+  }
+
+  .providers-list {
+    gap: 20px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .modal-content {
+    padding: 20px;
+    width: 98%;
+  }
+
+  .modal-content h2 {
+    font-size: 24px;
+  }
+
+  .modal-close-button {
+    font-size: 26px;
+    top: 18px;
+    right: 18px;
+  }
+
+  .modal-trailer {
+    padding-bottom: 56.25%;
+  }
+
+  .modal-description h3,
+  .modal-cast h3,
+  .modal-providers h3 {
+    font-size: 20px;
+  }
+
+  .modal-description p,
+  .modal-cast p,
+  .modal-providers p {
+    font-size: 16px;
+  }
+
+  .cast-link {
+    font-size: 16px;
+    padding: 10px 0;
+  }
+
+  .provider-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .providers-list {
+    gap: 15px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 18px;
+  }
+
+  .modal-content h2 {
+    font-size: 22px;
+  }
+
+  .modal-trailer {
+    padding-bottom: 60%;
+  }
+
+  .modal-description h3,
+  .modal-cast h3,
+  .modal-providers h3 {
+    font-size: 18px;
+  }
+
+  .modal-description p,
+  .modal-cast p,
+  .modal-providers p {
+    font-size: 15px;
+  }
+
+  .cast-link {
+    font-size: 15px;
+    padding: 8px 0;
+  }
+
+  .provider-logo {
+    width: 35px;
+    height: 35px;
+  }
+
+  .providers-list {
+    gap: 12px;
+    padding: 10px;
+  }
 }

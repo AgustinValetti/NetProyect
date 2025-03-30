@@ -7,6 +7,21 @@ import { useAuth } from '../Context/AuthContext';
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const TMDB_API_URL = 'https://api.themoviedb.org/3';
 
+// Mapeo de nombres de plataformas a sus URLs principales
+const platformUrls = {
+  'Netflix': 'https://www.netflix.com',
+  'Disney Plus': 'https://www.disneyplus.com',
+  'HBO Max': 'https://www.max.com', // HBO Max ahora es Max
+  'Amazon Prime Video': 'https://www.primevideo.com',
+  'Paramount Plus': 'https://www.paramountplus.com',
+  'Apple TV Plus': 'https://www.apple.com/apple-tv-plus/',
+  'Star Plus': 'https://www.starplus.com',
+  'Claro video': 'https://www.clarovideo.com',
+  'Movistar Plus+': 'https://www.movistarplus.es',
+  'Globoplay': 'https://globoplay.globo.com',
+  'Lionsgate Plus': 'https://www.lionsgateplus.com',
+};
+
 // Hook personalizado para debounce
 const useDebounce = (callback, delay) => {
   const timeoutRef = useRef(null);
@@ -37,10 +52,10 @@ const SeriesPage = () => {
   const [error, setError] = useState(null);
   const [selectedSeries, setSelectedSeries] = useState(null);
   const [trailerUrl, setTrailerUrl] = useState(null);
+  const [watchProviders, setWatchProviders] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(35);
-  const [message, setMessage] = useState(null);
 
   const searchTermRef = useRef(searchTerm);
 
@@ -110,7 +125,7 @@ const SeriesPage = () => {
   const fetchTrailer = async (seriesId) => {
     try {
       const response = await fetch(
-        `${TMDB_API_URL}/tv/${seriesId}/videos?api_key=${TMDB_API_KEY}&language=es-ES`
+        `${TMDB_API_URL}/tv/${seriesId}/videos?api_key=${TMDB_API_KEY}&language=es-MX`
       );
       if (!response.ok) {
         throw new Error('Error al obtener el tráiler');
@@ -126,10 +141,47 @@ const SeriesPage = () => {
     }
   };
 
+  const fetchWatchProviders = async (seriesId) => {
+    try {
+      const response = await fetch(
+        `${TMDB_API_URL}/tv/${seriesId}/watch/providers?api_key=${TMDB_API_KEY}`
+      );
+      if (!response.ok) {
+        throw new Error('Error al obtener los proveedores de TMDB');
+      }
+      const data = await response.json();
+      console.log('Respuesta de TMDB /watch/providers:', data);
+
+      // Priorizamos países de Latinoamérica (MX, AR, CO, BR, CL, PE)
+      const latamCountries = ['MX', 'AR', 'CO', 'BR', 'CL', 'PE'];
+      let providers = [];
+
+      for (const country of latamCountries) {
+        if (data.results[country]?.flatrate) {
+          providers = data.results[country].flatrate.map((provider) => ({
+            provider_id: provider.provider_id,
+            provider_name: provider.provider_name,
+            logo_path: `https://image.tmdb.org/t/p/w45${provider.logo_path}`,
+            link: platformUrls[provider.provider_name] || 'https://www.themoviedb.org',
+          }));
+          break;
+        }
+      }
+
+      console.log('Proveedores de TMDB (Latinoamérica):', providers);
+      return providers;
+    } catch (err) {
+      console.error('Error al obtener los proveedores de TMDB:', err);
+      return [];
+    }
+  };
+
   const handleSeriesClick = async (series) => {
     setSelectedSeries(series);
     const trailer = await fetchTrailer(series.id);
+    const providers = await fetchWatchProviders(series.id);
     setTrailerUrl(trailer);
+    setWatchProviders(providers);
     setModalOpen(true);
   };
 
@@ -137,6 +189,7 @@ const SeriesPage = () => {
     setModalOpen(false);
     setSelectedSeries(null);
     setTrailerUrl(null);
+    setWatchProviders([]);
   };
 
   const handleSearchChange = (e) => {
@@ -146,54 +199,35 @@ const SeriesPage = () => {
 
   const addToWatchLater = async (series) => {
     if (!isAuthenticated) {
-      setMessage('Por favor, inicia sesión para agregar series a "Ver más tarde"');
-      setTimeout(() => setMessage(null), 3000);
+      alert('Por favor, inicia sesión para agregar series a "Ver más tarde"');
       return;
     }
-
-    if (user?.watchLaterMovies?.some((s) => s.id === series.id)) {
-      setMessage('Esta serie ya está en tu lista de "Ver más tarde"');
-      setTimeout(() => setMessage(null), 3000);
-      return;
-    }
-
     try {
       const seriesData = {
         id: series.id,
-        title: series.name, // Renombramos "name" a "title" para que coincida con el esquema
+        title: series.name,
         poster_path: series.poster_path,
-        release_date: series.first_air_date, // Renombramos "first_air_date" a "release_date"
+        release_date: series.first_air_date,
       };
       await authRequest('/api/watchlater', 'POST', seriesData);
       const updatedWatchLater = await authRequest('/api/watchlater', 'GET');
       updateUser({ ...user, watchLaterMovies: updatedWatchLater.data });
-      setMessage('Serie añadida a "Ver más tarde"');
-      setTimeout(() => setMessage(null), 3000);
     } catch (err) {
-      setMessage(err.message || 'Error al agregar la serie');
-      setTimeout(() => setMessage(null), 3000);
       console.error('Error al agregar serie a "Ver más tarde":', err);
+      alert('No se pudo agregar la serie');
     }
   };
 
   const removeFromWatchLater = async (seriesId) => {
-    if (!isAuthenticated) {
-      setMessage('Por favor, inicia sesión para quitar series de "Ver más tarde"');
-      setTimeout(() => setMessage(null), 3000);
-      return;
-    }
-
+    if (!isAuthenticated) return;
     try {
       console.log('🔍 Enviando DELETE para seriesId:', seriesId, typeof seriesId);
       await authRequest(`/api/watchlater/${seriesId}`, 'DELETE');
       const updatedWatchLater = await authRequest('/api/watchlater', 'GET');
       updateUser({ ...user, watchLaterMovies: updatedWatchLater.data });
-      setMessage('Serie eliminada de "Ver más tarde"');
-      setTimeout(() => setMessage(null), 3000);
     } catch (err) {
-      setMessage(err.message || 'Error al quitar la serie');
-      setTimeout(() => setMessage(null), 3000);
       console.error('Error al quitar serie de "Ver más tarde":', err);
+      alert('No se pudo quitar la serie');
     }
   };
 
@@ -216,7 +250,6 @@ const SeriesPage = () => {
         />
         {loading && searchTerm && <span className="search-spinner"></span>}
       </div>
-      {message && <div className="message">{message}</div>}
       {loading && !searchTerm ? (
         <div className="loading">Cargando series...</div>
       ) : error ? (
@@ -226,34 +259,34 @@ const SeriesPage = () => {
       ) : (
         <>
           <div className="content-grid">
-            {currentItems.map((show) => {
-              const isInWatchLater = user?.watchLaterMovies?.some((s) => s.id === show.id);
-              console.log(`Series ${show.name} - isInWatchLater: ${isInWatchLater}`); // Depuración
+            {currentItems.map((series) => {
+              const isInWatchLater = user?.watchLaterMovies?.some((s) => s.id === series.id);
+              console.log(`Series ${series.name} - isInWatchLater: ${isInWatchLater}`);
               return (
                 <div
-                  key={show.id}
+                  key={series.id}
                   className={`content-card ${isInWatchLater ? 'later' : ''}`}
-                  onClick={() => handleSeriesClick(show)}
+                  onClick={() => handleSeriesClick(series)}
                   style={{ cursor: 'pointer' }}
                 >
                   <img
                     src={
-                      show.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
+                      series.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${series.poster_path}`
                         : 'https://via.placeholder.com/150'
                     }
-                    alt={show.name}
+                    alt={series.name}
                     className="content-image"
                   />
-                  <h3>{show.name}</h3>
-                  <p>{show.first_air_date || 'Fecha no disponible'}</p>
+                  <h3>{series.name}</h3>
+                  <p>{series.first_air_date || 'Fecha no disponible'}</p>
                   {isAuthenticated && (
                     isInWatchLater ? (
                       <button
                         className="remove-button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          removeFromWatchLater(show.id);
+                          removeFromWatchLater(series.id);
                         }}
                       >
                         Quitar de "Ver más tarde"
@@ -263,7 +296,7 @@ const SeriesPage = () => {
                         className="add-button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          addToWatchLater(show);
+                          addToWatchLater(series);
                         }}
                       >
                         Agregar a "Ver más tarde"
@@ -297,6 +330,7 @@ const SeriesPage = () => {
         onClose={closeModal}
         selectedMovie={selectedSeries}
         trailerUrl={trailerUrl}
+        watchProviders={watchProviders}
       />
     </div>
   );
