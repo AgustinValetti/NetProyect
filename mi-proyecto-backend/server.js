@@ -28,7 +28,7 @@ if (!process.env.TMDB_API_KEY) console.error('❌ TMDB_API_KEY no está definido
 const app = express();
 
 // Habilitar CORS para el frontend en localhost:5173, 5175 y 5177
-app.use(cors({ origin: ['http://localhost:5173', 'http://localhost:5175', 'http://localhost:5174', 'http://localhost:5177'] }));
+app.use(cors({ origin: ['https://tudominio.vercel.app','http://localhost:5173', 'http://localhost:5175', 'http://localhost:5174', 'http://localhost:5177'] }));
 
 // Middleware para analizar JSON y datos de formularios
 app.use(express.json());

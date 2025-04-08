@@ -13,7 +13,7 @@
     "routes": [
       {
         "src": "/api/.*",
-        "dest": "http://localhost:5080/api" 
+        "dest": "https://tudominio.vercel.app'," 
       },
       {
         "src": "/(.*)",
