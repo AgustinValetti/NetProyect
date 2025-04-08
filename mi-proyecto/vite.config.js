@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   define: {
@@ -9,14 +10,7 @@ export default defineConfig({
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
-  // Configuración esencial para producción
-  base: '/', // Esto es crucial para Vercel
-  build: {
-    outDir: 'dist',
-    emptyOutDir: true,
-    sourcemap: true // Opcional para debugging
-  },
-  // Configuración del servidor (solo para desarrollo)
+  
   server: {
     proxy: {
       '/api': {
@@ -25,7 +19,6 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, '/api')
       }
-    },
-    historyApiFallback: true // Importante para React Router
+    }
   }
 })

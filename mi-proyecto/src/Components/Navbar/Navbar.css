@@ -72,7 +72,7 @@
 
 .navbar-brand a:hover {
   color: #bd0811;
-  
+  background: rgba(187, 45, 59, 0.1);
   border-bottom: 2px solid;
   border-image: linear-gradient(90deg, 
     rgba(248, 113, 113, 0) 0%, 
