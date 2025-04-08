@@ -13,7 +13,7 @@
     "routes": [
       {
         "src": "/api/.*",
-        "dest": "https://tudominio.vercel.app'," 
+        "dest": "https://net-proyect.vercel.app/" 
       },
       {
         "src": "/(.*)",
