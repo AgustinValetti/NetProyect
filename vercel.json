@@ -1,15 +1,26 @@
 {
     "version": 2,
-    "build": {
-      "env": {
-        "VITE_MONGODB_URI": "mongodb+srv://agustinvaletti:dmgl1mYzOHrRYwJS@cluster0.jauqm6k.mongodb.net/",
-        "VITE_MONGODB_DB": "MovieReview27017"
+    "builds": [
+      {
+        "src": "vite.config.js",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "dist",
+          "cleanDistDir": true
+        }
       }
-    },
+    ],
     "routes": [
       {
-        "src": "/.*",
-        "dest": "/index.html"
+        "src": "/api/.*",
+        "dest": "http://localhost:5080/api" 
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/index.html",
+        "headers": {
+          "Cache-Control": "no-cache"
+        }
       }
     ]
   }
