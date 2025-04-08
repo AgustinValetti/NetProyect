@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "build": {
+      "env": {
+        "VITE_MONGODB_URI": "mongodb+srv://agustinvaletti:dmgl1mYzOHrRYwJS@cluster0.jauqm6k.mongodb.net/",
+        "VITE_MONGODB_DB": "MovieReview27017"
+      }
+    },
+    "routes": [
+      {
+        "src": "/.*",
+        "dest": "/index.html"
+      }
+    ]
+  }

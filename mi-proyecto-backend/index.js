@@ -5,14 +5,13 @@ const movieRoutes = require('./src/routes/movies'); // Importamos las rutas de p
 const authRoutes = require('./src/routes/auth'); // Importamos las rutas de autenticación
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json()); // Permite recibir JSON en las requests
 app.use(cors()); // Habilita CORS para peticiones desde el frontend
 
 // Conexión a MongoDB
-mongoose.connect('mongodb://localhost:27017/nombreDeTuBaseDeDatos', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -23,8 +22,5 @@ mongoose.connect('mongodb://localhost:27017/nombreDeTuBaseDeDatos', {
 app.use('/api', movieRoutes); // Todas las rutas de películas estarán bajo "/api"
 app.use('/api/auth', authRoutes); // Todas las rutas de autenticación estarán bajo "/api/auth"
 
-
-// Iniciar servidor
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
-});
+// Exportar la app para Vercel
+module.exports = app;
